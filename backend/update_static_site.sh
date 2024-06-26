@@ -15,7 +15,7 @@ cd output
 # Initialize git repository if not already initialized
 if [ ! -d ".git" ]; then
   git init
-  git remote add origin https://github.com/your-username/your-repo-name.git
+  git remote add origin https://github.com/kshan29/Project.git
 fi
 
 # Checkout gh-pages branch
