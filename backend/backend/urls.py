@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from distill_config import urlpatterns as distill_urlpatterns
 
 # urlpatterns = [
 #     path('', index, name='index'),
@@ -24,5 +25,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('projects.urls')),  # Include URLs from the projects app
-    path('', include('distill_config')), # Include the distill config
+    # path('', include('distill_config')), # Include the distill config
 ]
+
+urlpatterns += distill_urlpatterns
