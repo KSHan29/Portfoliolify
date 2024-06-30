@@ -1,0 +1,32 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/global.css' %}" />
+<link rel="stylesheet" href="{% static 'css/nav.css' %}" />
+
+<div class="top-ribbon">
+  <div class="left">
+    <a href="https://github.com">
+      <img src="{% static 'images/github-logo.png' %}" alt="GitHub Logo" />
+      GitHub
+    </a>
+  </div>
+  <div class="center">
+    <input type="text" placeholder="Search..." />
+  </div>
+  <div class="right">
+    {% if user.is_authenticated %}
+    <div class="welcome-message">Welcome, {{ user.username }}!</div>
+    <button onclick="window.location.href='{% url 'logout' %}'">Logout</button>
+    {% else %}
+    <button onclick="window.location.href='{% url 'login' %}'">Login</button>
+    {% endif %}
+  </div>
+</div>
+
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/contact/">Contact</a></li>
+    <!-- Add more navigation links as needed -->
+  </ul>
+</nav>
