@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- prettier-ignore -->
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'githubDisplay/css/projects.css' %}" />
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block title %}Your Projects{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>GitHub Projects</h1>
+  <div id="projects-wrapper">
+    {% for project in projects %}
+    <div class="project">
+      <a href="{{ project.html_url }}" target="_blank"
+        ><h2>{{ project.name }}</h2></a
+      >
+      <p>{{ project.description }}</p>
+    </div>
+    {% empty %}
+    <div id="no-projects-container">
+      <div id="no-projects">
+        No projects found, start making some then click the button below to
+        update!
+      </div>
+      <button
+        class="button"
+        id="sync-button"
+        onclick="window.location.href='{% url 'sync_projects' %}'"
+      >
+        Sync Projects with GitHub
+      </button>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

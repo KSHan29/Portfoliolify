@@ -5,7 +5,11 @@
 <div class="top-ribbon">
   <div class="left">
     <a href="https://github.com">
-      <img src="{% static 'images/github-logo.png' %}" alt="GitHub Logo" />
+      <img
+        id="github-logo"
+        src="{% static 'images/github-logo.png' %}"
+        alt="GitHub Logo"
+      />
       GitHub
     </a>
   </div>
@@ -13,11 +17,25 @@
     <input type="text" placeholder="Search..." />
   </div>
   <div class="right">
-    {% if user.is_authenticated %}
-    <div class="welcome-message">Welcome, {{ user.username }}!</div>
-    <button onclick="window.location.href='{% url 'logout' %}'">Logout</button>
+    {% if user.is_authenticated %} {% if request.session.github_avatar_url %}
+    <a href="https://github.com/{{ user.username }}" target="_blank">
+      <div id="profile-container">
+        <img
+          src="{{ request.session.github_avatar_url }}"
+          alt="GitHub Profile"
+          id="github-avatar"
+        />
+        <div id="user-name">{{ user.username }}!</div>
+      </div>
+    </a>
+    {% endif %}
+    <button class="button" onclick="window.location.href='{% url 'logout' %}'">
+      Logout
+    </button>
     {% else %}
-    <button onclick="window.location.href='{% url 'login' %}'">Login</button>
+    <button class="button" onclick="window.location.href='{% url 'login' %}'">
+      Login
+    </button>
     {% endif %}
   </div>
 </div>

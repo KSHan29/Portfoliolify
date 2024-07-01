@@ -1,27 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GitHub Projects</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/global.css' %}" />
-    <link rel="stylesheet" href="{% static 'githubDisplay/css/index.css' %}" />
-  </head>
-  <body>
-    {% include "nav.html" %}
+{% extends 'base.html' %} {% load static %}
 
-    <div class="container">
-      <h1>GitHub Projects</h1>
-      <div id="projects">
-        {% for project in projects %}
-        <div class="project">
-          <h2>{{ project.name }}</h2>
-          <p>{{ project.description }}</p>
-          <a href="{{ project.html_url }}" target="_blank">View on GitHub</a>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-  </body>
-</html>
+<!-- prettier-ignore -->
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'githubDisplay/css/home.css' %}" />
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="logo-container">
+    <img
+      class="logo"
+      src="{% static 'images/Portfoliolify.png' %}"
+      alt="Portfoliolify"
+    />
+  </div>
+  {% if user.is_authenticated %}
+  <div class="sync-projects-description">
+    No projects found. Click below to sync!
+  </div>
+  <button
+    class="button"
+    id="sync-button"
+    onclick="window.location.href='{% url 'sync_projects' %}'"
+  >
+    Sync Projects with GitHub
+  </button>
+  {% else %}
+  <div class="not-logged-in">
+    Please login with GitHub at the top right corner to start Portfoliolifying!
+  </div>
+</div>
+{% endif %} {% endblock %}
