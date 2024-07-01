@@ -17,7 +17,8 @@
       <a href="{{ project.html_url }}" target="_blank"
         ><h2>{{ project.name }}</h2></a
       >
-      <p>{{ project.description }}</p>
+      <div id="project-description">{{ project.description }}</div>
+      <img src="{{ project.img_url }}" alt="Project Image" id="project-image" />
     </div>
     {% empty %}
     <div id="no-projects-container">

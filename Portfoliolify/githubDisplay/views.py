@@ -5,60 +5,61 @@ import requests
 from django.contrib import messages
 from social_django.models import UserSocialAuth
 from .models import Project, UserProfile
+from .utils import get_github_access_token, check_user_logged_in
+
 
 @login_required
 def profile_data_view(request):
-    user = request.user
-    github_login = user.social_auth.filter(provider='github').first()
-    if github_login:
-        response = requests.get('https://api.github.com/user', 
-                                headers={'Authorization': f'token {github_login.extra_data["access_token"]}'})
-        if response.status_code == 200:
-            github_data = response.json()
-            return JsonResponse({'profile': github_data})
+    access_token, headers = get_github_access_token(request)
+    if not access_token:
+        return redirect('home')
+
+    response = requests.get('https://api.github.com/user', headers=headers)
+    if response.status_code == 200:
+        github_data = response.json()
+        return JsonResponse({'profile': github_data})
+    else:
+        return JsonResponse({'error': 'Unable to fetch GitHub profile data'}, status=response.status_code)
 
 def projects_data_view(request):
-    # response = requests.get('https://api.github.com/users/KSHan29/repos')
-    # data = response.json()
-    # return JsonResponse({'projects': data})
-    try:
-        github_auth = request.user.social_auth.get(provider='github')
-        access_token = github_auth.extra_data['access_token']
-    except UserSocialAuth.DoesNotExist:
-        messages.error(request, "You need to authenticate with GitHub first.")
+    access_token, headers = get_github_access_token(request)
+    if not access_token:
         return redirect('home')
-    access_token = request.user.social_auth.get(provider='github').extra_data['access_token']
-    headers = {'Authorization': f'token {access_token}'}
+    
     response = requests.get('https://api.github.com/user/repos', headers=headers)
-    data = response.json()
-    return JsonResponse({'projects': data})
+    if response.status_code == 200:
+        data = response.json()
+        return JsonResponse({'projects': data})
+    else:
+        return JsonResponse({'error': 'Unable to fetch projects data'}, status=response.status_code)
 
 def home_view(request):
-    if request.user.is_authenticated:
-        if request.user.userprofile.has_synced:
-            return redirect('user_projects')
-        else:
-            return render(request, 'gitHubDisplay/home.html')
-    else:
+    if not check_user_logged_in(request):
         return redirect('login')
+
+    if request.user.userprofile.has_synced:
+        return redirect('user_projects')
+    else:
+        return render(request, 'gitHubDisplay/home.html')
 
 @login_required
 def sync_projects_view(request):
-    try:
-        github_auth = request.user.social_auth.get(provider='github')
-        access_token = github_auth.extra_data['access_token']
-    except UserSocialAuth.DoesNotExist:
-        messages.error(request, "You need to authenticate with GitHub first.")
-        return redirect('home')
-    access_token = request.user.social_auth.get(provider='github').extra_data['access_token']
-    headers = {'Authorization': f'token {access_token}'}
+    access_token, headers = get_github_access_token(request)
     response = requests.get('https://api.github.com/user/repos', headers=headers)
 
     if response.status_code == 200:
         repos = response.json()
         for repo in repos:
+            repo_name = repo['name']
+            owner = repo['owner']['login']
+            image_url = f'https://raw.githubusercontent.com/{owner}/{repo_name}/main/Project.png'
+            # Check if the image exists
+            image_response = requests.head(image_url)
+            if image_response.status_code != 200:
+                image_url = '/static/images/Portfoliolify.png'
             Project.objects.update_or_create(
                 owner=request.user,
+                img_url=image_url,
                 html_url=repo['html_url'],
                 defaults={
                     'name': repo['name'],

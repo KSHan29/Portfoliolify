@@ -6,6 +6,7 @@ from django.dispatch import receiver
 class Project(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
+    img_url = models.URLField()
     html_url = models.URLField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects')
 
