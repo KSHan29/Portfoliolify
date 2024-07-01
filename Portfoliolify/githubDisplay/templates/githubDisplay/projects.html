@@ -11,6 +11,7 @@
 {% block content %}
 <div class="container">
   <h1>GitHub Projects</h1>
+  {% if projects %}
   <div id="projects-wrapper">
     {% for project in projects %}
     <div class="project">
@@ -20,22 +21,23 @@
       <div id="project-description">{{ project.description }}</div>
       <img src="{{ project.img_url }}" alt="Project Image" id="project-image" />
     </div>
-    {% empty %}
-    <div id="no-projects-container">
-      <div id="no-projects">
-        No projects found, start making some then click the button below to
-        update!
-      </div>
-      <button
-        class="button"
-        id="sync-button"
-        onclick="window.location.href='{% url 'sync_projects' %}'"
-      >
-        Sync Projects with GitHub
-      </button>
-    </div>
     {% endfor %}
   </div>
+  {% else %}
+  <div id="no-projects-container">
+    <div id="no-projects">
+      No projects found, start making some then click the button below to
+      update!
+    </div>
+    <button
+      class="button"
+      id="sync-button"
+      onclick="window.location.href='{% url 'sync_projects' %}'"
+    >
+      Sync Projects with GitHub
+    </button>
+  </div>
+  {% endif %}
 </div>
 
 {% endblock %}
