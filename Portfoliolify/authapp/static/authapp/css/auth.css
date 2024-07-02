@@ -27,6 +27,12 @@ body {
   text-align: center;
 }
 
+.auth-description {
+  font-weight: 500;
+  font-size: 1.1em;
+  margin-top: 20px;
+}
+
 .github-button {
   width: 300px;
   padding: 10px;

@@ -19,6 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('githubDisplay.urls')),  # Include URLs from the app
-    path('auth/', include('authapp.urls')),  # Include URLs from the app
+    path('', include('githubDisplay.urls')),
+    path('auth/', include('authapp.urls')),
+    path('', include('info.urls')),
 ]

@@ -34,10 +34,7 @@ def projects_data_view(request):
         return JsonResponse({'error': 'Unable to fetch projects data'}, status=response.status_code)
 
 def home_view(request):
-    if not check_user_logged_in(request):
-        return redirect('login')
-
-    if request.user.userprofile.has_synced:
+    if check_user_logged_in(request) and request.user.userprofile.has_synced:
         return redirect('user_projects')
     else:
         return render(request, 'gitHubDisplay/home.html')
@@ -79,5 +76,8 @@ def sync_projects_view(request):
 
 @login_required
 def user_projects_view(request):
+    query = request.GET.get('q')
     projects = Project.objects.filter(owner=request.user)
-    return render(request, 'gitHubDisplay/projects.html', {'projects': projects})
+    if query:
+        projects = projects.filter(name__icontains=query)
+    return render(request, 'gitHubDisplay/projects.html', {'projects': projects, 'query': query})

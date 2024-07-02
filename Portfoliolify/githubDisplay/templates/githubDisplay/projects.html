@@ -13,19 +13,37 @@
   <h1>GitHub Projects</h1>
   {% if projects %}
   <div id="projects-wrapper">
-    {% for project in projects %}
-    <div class="project">
-      <a href="{{ project.html_url }}" target="_blank"
-        ><h2>{{ project.name }}</h2></a
-      >
-      <div id="project-description">{{ project.description }}</div>
-      <img src="{{ project.img_url }}" alt="Project Image" id="project-image" />
+    <div id="projects-container">
+      {% for project in projects %}
+      <div class="project">
+        <a href="{{ project.html_url }}" target="_blank"
+          ><h2>{{ project.name }}</h2></a
+        >
+        <div id="project-description">{{ project.description }}</div>
+        <img
+          src="{{ project.img_url }}"
+          alt="Project Image"
+          id="project-image"
+        />
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
   {% else %}
   <div id="no-projects-container">
-    <div id="no-projects">
+    <div class="logo-container">
+      <img
+        class="logo"
+        src="{% static 'images/Portfoliolify.png' %}"
+        alt="Portfoliolify"
+      />
+    </div>
+    {% if query %}
+    <div class="no-projects">
+      No projects found. Try checking your search parameters!
+    </div>
+    {% else %}
+    <div class="no-projects">
       No projects found, start making some then click the button below to
       update!
     </div>
@@ -36,6 +54,7 @@
     >
       Sync Projects with GitHub
     </button>
+    {% endif %}
   </div>
   {% endif %}
 </div>

@@ -14,7 +14,17 @@
     </a>
   </div>
   <div class="center">
-    <input type="text" placeholder="Search..." />
+    {% if projects or query %}
+    <form method="GET" action="{% url 'user_projects' %}" id="search-form">
+      <input
+        id="search-bar"
+        type="text"
+        name="q"
+        placeholder="Search projects..."
+        value="{{ request.GET.q }}"
+      />
+    </form>
+    {% endif %}
   </div>
   <div class="right">
     {% if user.is_authenticated %} {% if request.session.github_avatar_url %}
