@@ -11,6 +11,8 @@
 {% block content %}
 <div class="container">
   <h1>GitHub Projects</h1>
+  <a href="{% url 'select_projects' %}" class="button edit-button">Edit</a>
+  <a href="{% url 'sync_projects' %}" class="button sync-button">Sync</a>
   {% if projects %}
   <div id="projects-wrapper">
     <div id="projects-container">
@@ -44,8 +46,8 @@
     </div>
     {% else %}
     <div class="no-projects">
-      No projects found, start making some then click the button below to
-      update!
+      No projects found, check your selections or start making some then click
+      the button below to update!
     </div>
     <button
       class="button"

@@ -16,6 +16,7 @@ class Project(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     has_synced = models.BooleanField(default=False)
+    selected_projects = models.ManyToManyField(Project, blank=True)
 
 # Automatically create or update UserProfile whenever a User is created or updated
 @receiver(post_save, sender=User)

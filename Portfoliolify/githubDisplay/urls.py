@@ -7,4 +7,5 @@ urlpatterns = [
     path('api/profile/', views.profile_data_view, name='get_profile'),
     path('sync/', views.sync_projects_view, name='sync_projects'),
     path('projects/', views.user_projects_view, name='user_projects'),
+    path('select-projects/', views.project_selection_view, name='select_projects'),
 ]

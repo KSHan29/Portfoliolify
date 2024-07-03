@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% load static %}
+
+<!-- prettier-ignore -->
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'githubDisplay/css/home.css' %}" />
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Select Projects to Display</h1>
+<form method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="button">Save</button>
+</form>
+{% endblock %}
