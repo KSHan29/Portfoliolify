@@ -2,16 +2,50 @@
 
 <!-- prettier-ignore -->
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'githubDisplay/css/home.css' %}" />
+<link rel="stylesheet" href="{% static 'githubDisplay/css/projects.css' %}" />
 {% endblock %}
 
 <!-- prettier-ignore -->
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Select Projects to Display</h1>
-<form method="POST">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit" class="button">Save</button>
-</form>
+<div class="container">
+  <h1>Select Projects to Display</h1>
+  <form method="POST" id="form">
+    {% csrf_token %}
+    <div id="projects-wrapper">
+      <div id="projects-container">
+        {% for project in projects %}
+        <div
+          class="project {% if project in form.fields.projects.initial %}selected{% endif %}"
+        >
+          <!-- prettier-ignore -->
+          <input
+            type="checkbox"
+            name="projects"
+            value="{{ project.id }}"
+            id="project_{{ project.id }}"
+
+            {% if project in form.fields.projects.initial %}
+            checked
+            {% endif %}
+          />
+          <label for="project_{{ project.id }}">
+            <a href="{{ project.html_url }}" target="_blank">
+              <h2>{{ project.name }}</h2>
+            </a>
+            <div id="project-description">{{ project.description }}</div>
+            <img
+              src="{{ project.img_url }}"
+              alt="Project Image"
+              id="project-image"
+            />
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <button type="submit" class="button save-button">Save</button>
+  </form>
+</div>
 {% endblock %}

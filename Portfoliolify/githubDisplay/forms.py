@@ -13,10 +13,13 @@ class ProjectSelectionForm(forms.Form):
         super().__init__(*args, **kwargs)
         if user:
             self.fields['projects'].queryset = Project.objects.filter(owner=user)
-            self.fields['projects'].initial = user.userprofile.selected_projects.all()
+            self.fields['projects'].initial = Project.objects.filter(owner=user, show=True)
 
 
     def save(self, user):
         selected_projects = self.cleaned_data['projects']
-        user.userprofile.selected_projects.set(selected_projects)
-        user.userprofile.save()
+        user_projects = Project.objects.filter(owner=user)
+
+        for project in user_projects:
+            project.show = project in selected_projects
+            project.save()

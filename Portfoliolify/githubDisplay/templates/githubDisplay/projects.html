@@ -11,9 +11,21 @@
 {% block content %}
 <div class="container">
   <h1>GitHub Projects</h1>
-  <a href="{% url 'select_projects' %}" class="button edit-button">Edit</a>
-  <a href="{% url 'sync_projects' %}" class="button sync-button">Sync</a>
   {% if projects %}
+  <div class="project-buttons">
+    <button
+      class="button edit-button"
+      onclick="window.location.href='{% url 'select_projects' %}'"
+    >
+      Edit
+    </button>
+    <button
+      class="button sync-button"
+      onclick="window.location.href='{% url 'sync_projects' %}'"
+    >
+      Sync
+    </button>
+  </div>
   <div id="projects-wrapper">
     <div id="projects-container">
       {% for project in projects %}
@@ -40,18 +52,32 @@
         alt="Portfoliolify"
       />
     </div>
-    {% if query %}
+    {% if has_synced %}
     <div class="no-projects">
-      No projects found. Try checking your search parameters!
+      No projects found. Try checking your search parameters, changing selection
+      or syncing more projects!
+    </div>
+    <div class="project-buttons">
+      <button
+        class="button edit-button"
+        onclick="window.location.href='{% url 'select_projects' %}'"
+      >
+        Edit
+      </button>
+      <button
+        class="button sync-button"
+        onclick="window.location.href='{% url 'sync_projects' %}'"
+      >
+        Sync
+      </button>
     </div>
     {% else %}
     <div class="no-projects">
-      No projects found, check your selections or start making some then click
-      the button below to update!
+      No projects found, start making some then click the button below to
+      update!
     </div>
     <button
-      class="button"
-      id="sync-button"
+      class="button sync-button"
       onclick="window.location.href='{% url 'sync_projects' %}'"
     >
       Sync Projects with GitHub

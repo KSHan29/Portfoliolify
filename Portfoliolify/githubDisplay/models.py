@@ -9,6 +9,7 @@ class Project(models.Model):
     img_url = models.URLField()
     html_url = models.URLField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects')
+    show = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

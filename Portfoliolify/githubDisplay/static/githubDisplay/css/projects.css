@@ -17,6 +17,13 @@ body {
   align-items: center;
 }
 
+#form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 h1 {
   text-align: center;
   color: #333333;
@@ -35,6 +42,15 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#no-projects-container .edit-button {
+  margin-top: 20px;
+  width: 150px;
+}
+
+#no-projects-container .sync-button {
+  margin-top: 20px;
 }
 
 .project {
@@ -57,6 +73,17 @@ h1 {
 .project a:active {
   text-decoration: underline;
   color: #003f7f;
+}
+
+.project-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.project-buttons .edit-button,
+.project-buttons .sync-button {
+  margin-bottom: 20px;
+  width: 150px;
 }
 
 .project h2 {
@@ -89,6 +116,7 @@ h1 {
   text-align: center;
 }
 
-#sync-button {
+.save-button {
   margin-top: 20px;
+  width: 150px;
 }
