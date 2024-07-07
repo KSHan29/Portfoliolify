@@ -10,28 +10,18 @@
 
 {% block content %}
 <div class="container">
-  <h1>GitHub Projects</h1>
+  <a href="https://github.com/{{ profile.user }}" target="_blank">
+    <div id="profile-container">
+      <img
+        src="{{ profile.profile_img_url }}"
+        alt="GitHub Profile"
+        id="github-avatar"
+        class="public-profile"
+      />
+    </div>
+  </a>
+  <h1>{{ profile.user }}'s GitHub Projects</h1>
   {% if projects %}
-  <div class="project-buttons">
-    <button
-      class="button edit-button"
-      onclick="window.location.href='{% url 'select_projects' %}'"
-    >
-      Edit
-    </button>
-    <button
-      class="button sync-button"
-      onclick="window.location.href='{% url 'sync_projects' %}'"
-    >
-      Sync
-    </button>
-    <button
-      class="button view-button"
-      onclick="window.location.href='{% url 'public_project' profile.user %}'"
-    >
-      View
-    </button>
-  </div>
   <div id="projects-wrapper">
     <div id="projects-container">
       {% for project in projects %}
@@ -85,34 +75,10 @@
       </div>
       {% if has_synced %}
       <div class="no-projects">
-        No projects found. Try checking your search parameters, changing
-        selection or syncing more projects!
-      </div>
-      <div class="project-buttons">
-        <button
-          class="button edit-button"
-          onclick="window.location.href='{% url 'select_projects' %}'"
-        >
-          Edit
-        </button>
-        <button
-          class="button sync-button"
-          onclick="window.location.href='{% url 'sync_projects' %}'"
-        >
-          Sync
-        </button>
+        No projects found. Try checking your search parameters!
       </div>
       {% else %}
-      <div class="no-projects">
-        No projects found, start making some then click the button below to
-        update!
-      </div>
-      <button
-        class="button sync-button"
-        onclick="window.location.href='{% url 'sync_projects' %}'"
-      >
-        Sync Projects with GitHub
-      </button>
+      <div class="no-projects">The user has not uploaded his projects yet!</div>
       {% endif %}
     </div>
     {% endif %}

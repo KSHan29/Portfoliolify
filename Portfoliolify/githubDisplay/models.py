@@ -10,6 +10,7 @@ class Project(models.Model):
     html_url = models.URLField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects')
     show = models.BooleanField(default=True)
+    languages = models.JSONField(default=dict)
 
     def __str__(self):
         return self.name
@@ -17,7 +18,7 @@ class Project(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     has_synced = models.BooleanField(default=False)
-    selected_projects = models.ManyToManyField(Project, blank=True)
+    profile_img_url = models.URLField()
 
 # Automatically create or update UserProfile whenever a User is created or updated
 @receiver(post_save, sender=User)

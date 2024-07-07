@@ -5,7 +5,7 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 50px auto;
   padding: 20px;
   background-color: #ffffff;
@@ -24,9 +24,65 @@ body {
   align-items: center;
 }
 
+#github-avatar.public-profile {
+  height: 120px;
+  width: 120px;
+  border: 2px solid gray;
+  object-fit: cover;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
 h1 {
   text-align: center;
   color: #333333;
+}
+
+.hidden-checkbox {
+  display: none;
+}
+
+.language-bar {
+  display: flex;
+  height: 12px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.language {
+  height: 100%;
+}
+
+.language-header {
+  font-weight: bold;
+  margin: 20px 0px 0px 10px;
+  text-align: left;
+}
+
+.language-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.language-list li {
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.language-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.language-percentage-tag {
+  font-weight: 600;
+  margin-right: 5px;
 }
 
 .no-projects {
@@ -55,9 +111,20 @@ h1 {
 
 .project {
   padding: 10px;
-  border: 1px solid #e0e0e0;
   border-radius: 5px;
   background-color: #f0f0f0;
+  border: 2px solid gray;
+}
+
+.project.selected {
+  border: 3px solid black;
+  border-color: #007bff;
+  background-color: #e6f2ff;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+
+.project-edition {
+  cursor: pointer;
 }
 
 .project a {
@@ -81,7 +148,8 @@ h1 {
 }
 
 .project-buttons .edit-button,
-.project-buttons .sync-button {
+.project-buttons .sync-button,
+.project-buttons .view-button {
   margin-bottom: 20px;
   width: 150px;
 }
@@ -96,7 +164,7 @@ h1 {
 }
 
 #project-description {
-  font-weight: bold;
+  font-size: 1.1em;
   margin-top: 10px;
 }
 

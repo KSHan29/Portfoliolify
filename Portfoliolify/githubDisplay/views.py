@@ -1,18 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import requests
 from django.contrib import messages
-from social_django.models import UserSocialAuth
+from django.contrib.auth.models import User
+from . import utils
 from .models import Project, UserProfile
-from .utils import get_github_access_token, check_user_logged_in
 from .forms import ProjectSelectionForm
 
 
 
 @login_required
 def profile_data_view(request):
-    access_token, headers = get_github_access_token(request)
+    access_token, headers = utils.get_github_access_token(request)
     if not access_token:
         return redirect('home')
 
@@ -24,7 +24,7 @@ def profile_data_view(request):
         return JsonResponse({'error': 'Unable to fetch GitHub profile data'}, status=response.status_code)
 
 def projects_data_view(request):
-    access_token, headers = get_github_access_token(request)
+    access_token, headers = utils.get_github_access_token(request)
     if not access_token:
         return redirect('home')
     
@@ -36,14 +36,14 @@ def projects_data_view(request):
         return JsonResponse({'error': 'Unable to fetch projects data'}, status=response.status_code)
 
 def home_view(request):
-    if check_user_logged_in(request) and request.user.userprofile.has_synced:
+    if utils.check_user_logged_in(request) and request.user.userprofile.has_synced:
         return redirect('user_projects')
     else:
         return render(request, 'gitHubDisplay/home.html')
 
 @login_required
 def sync_projects_view(request):
-    access_token, headers = get_github_access_token(request)
+    access_token, headers = utils.get_github_access_token(request)
     response = requests.get('https://api.github.com/user/repos', headers=headers)
 
     if response.status_code == 200:
@@ -57,6 +57,12 @@ def sync_projects_view(request):
             image_response = requests.head(image_url)
             if image_response.status_code != 200:
                 image_url = '/static/images/Portfoliolify.png'
+            languages_response = requests.get(repo['languages_url'], headers={
+                'Authorization': f'token {request.user.social_auth.get(provider="github").extra_data["access_token"]}'
+            }, verify=False)
+            languages = {}
+            if languages_response.status_code == 200:
+                languages = utils.process_languages(request, languages_response.json())
             try:
                 project = Project.objects.get(owner=request.user, html_url=repo['html_url'])
                 show_value = project.show
@@ -69,6 +75,7 @@ def sync_projects_view(request):
                     'name': repo['name'],
                     'description': repo['description'],
                     'img_url': image_url,
+                    'languages': languages,
                     'show': show_value,
                 }
             )
@@ -77,6 +84,8 @@ def sync_projects_view(request):
         # Profile synced
         profile = request.user.userprofile
         profile.has_synced = True
+        if 'github_avatar_url' in request.session:
+            profile.profile_img_url = request.session['github_avatar_url']
         profile.save()
     else:
         messages.error(request, "Failed to fetch repositories from GitHub.")
@@ -86,14 +95,17 @@ def sync_projects_view(request):
 
 @login_required
 def user_projects_view(request):
-    query = request.GET.get('q')
-    projects = request.user.projects.filter(show=True)
-    has_synced = request.user.userprofile.has_synced
-    # projects = Project.objects.filter(owner=request.user)
-    if query:
-        projects = projects.filter(name__icontains=query)
-    context = {'projects': projects, 'query': query, 'has_synced': has_synced}
+    profile = request.user.userprofile
+    context = utils.get_projects_context(request)
+    context['profile'] = profile
     return render(request, 'gitHubDisplay/projects.html', context)
+
+def public_project_views(request, github_username):
+    user = get_object_or_404(User, username=github_username)
+    profile = get_object_or_404(UserProfile, user=user)
+    context = utils.get_projects_context(request)
+    context['profile'] = profile
+    return render(request, 'gitHubDisplay/public_projects.html', context)
 
 @login_required
 def project_selection_view(request):

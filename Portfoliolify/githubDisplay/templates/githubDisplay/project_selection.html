@@ -4,6 +4,10 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'githubDisplay/css/projects.css' %}" />
 {% endblock %}
+<!-- prettier-ignore -->
+{% block extra_js %}
+<script src="{% static 'githubDisplay/js/projects.js' %}"></script>
+{% endblock %}
 
 <!-- prettier-ignore -->
 {% block title %}Home{% endblock %}
@@ -16,25 +20,23 @@
     <div id="projects-wrapper">
       <div id="projects-container">
         {% for project in projects %}
-        <div
-          class="project {% if project in form.fields.projects.initial %}selected{% endif %}"
-        >
-          <!-- prettier-ignore -->
-          <input
+        <!-- prettier-ignore -->
+        <div class="project" data-project-id="{{ project.id }}">
+        <!-- prettier-ignore -->
+        <input
             type="checkbox"
             name="projects"
             value="{{ project.id }}"
             id="project_{{ project.id }}"
-
+            class="hidden-checkbox"
             {% if project in form.fields.projects.initial %}
             checked
             {% endif %}
           />
-          <label for="project_{{ project.id }}">
+          <label class='project-edition' for="project_{{ project.id }}">
             <a href="{{ project.html_url }}" target="_blank">
               <h2>{{ project.name }}</h2>
             </a>
-            <div id="project-description">{{ project.description }}</div>
             <img
               src="{{ project.img_url }}"
               alt="Project Image"
