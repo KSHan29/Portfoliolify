@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('githubDisplay.urls')),
     path('auth/', include('authapp.urls')),
     path('', include('info.urls')),
+    path('chat/', include('chat.urls')),
 ]

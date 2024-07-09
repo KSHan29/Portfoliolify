@@ -7,6 +7,6 @@ urlpatterns = [
     path('api/profile/', views.profile_data_view, name='get_profile'),
     path('sync/', views.sync_projects_view, name='sync_projects'),
     path('projects/', views.user_projects_view, name='user_projects'),
-    path('select-projects/', views.project_selection_view, name='select_projects'),
-    path('profile/<str:github_username>/', views.public_project_views, name='public_project')
+    path('select-projects/', views.projects_selection_view, name='select_projects'),
+    path('profile/<str:github_username>/', views.public_projects_views, name='public_projects'),
 ]

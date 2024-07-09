@@ -3,6 +3,13 @@
 <!-- prettier-ignore -->
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'githubDisplay/css/projects.css' %}" />
+<link rel="stylesheet" href="{% static 'chat/css/chat.css' %}" />
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'chat/js/script.js' %}"></script>
 {% endblock %}
 
 <!-- prettier-ignore -->
@@ -56,11 +63,6 @@
           </ul>
         </div>
         {% endif %}
-        <img
-          src="{{ project.img_url }}"
-          alt="Project Image"
-          id="project-image"
-        />
       </div>
       {% endfor %}
     </div>
@@ -82,6 +84,14 @@
       {% endif %}
     </div>
     {% endif %}
+  </div>
+  <div class="chat-box">
+    <div class="messages" id="messages"></div>
+    <div class="input-box">
+      <input type="text" id="user-input" placeholder="Type a message..." />
+      <input type="hidden" id="username" value="{{ profile.user }}" />
+      <button onclick="sendMessage()">Send</button>
+    </div>
   </div>
 </div>
 {% endblock %}

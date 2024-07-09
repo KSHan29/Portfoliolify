@@ -100,7 +100,7 @@ def user_projects_view(request):
     context['profile'] = profile
     return render(request, 'gitHubDisplay/projects.html', context)
 
-def public_project_views(request, github_username):
+def public_projects_views(request, github_username):
     user = get_object_or_404(User, username=github_username)
     profile = get_object_or_404(UserProfile, user=user)
     context = utils.get_projects_context(request)
@@ -108,7 +108,7 @@ def public_project_views(request, github_username):
     return render(request, 'gitHubDisplay/public_projects.html', context)
 
 @login_required
-def project_selection_view(request):
+def projects_selection_view(request):
     if not request.user.userprofile.has_synced:
         return redirect('home')
     if request.method == 'POST':
@@ -120,4 +120,4 @@ def project_selection_view(request):
         form = ProjectSelectionForm(user=request.user)
     projects = request.user.projects.all()
     
-    return render(request, 'gitHubDisplay/project_selection.html', {'form': form, 'projects': projects})
+    return render(request, 'gitHubDisplay/projects_selection.html', {'form': form, 'projects': projects})
