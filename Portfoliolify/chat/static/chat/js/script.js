@@ -17,14 +17,14 @@ const csrftoken = getCookie("csrftoken");
 console.log(`CSRF Token: ${csrftoken}`); // Log the CSRF token
 
 function sendMessage() {
-  console.log("called");
   var message = $("#user-input").val();
   if (message.trim() === "") {
     return;
   }
-  $("#messages").append("<div><strong>You:</strong> " + message + "</div>");
+  $("#messages").append(
+    "<div class='text-messages'><strong>You:</strong> " + message + "</div>"
+  );
   $("#user-input").val("");
-  console.log("called2");
   const username = document.getElementById("username").value;
   $.post(`/chat/${username}/`, {
     message: message,
@@ -34,19 +34,32 @@ function sendMessage() {
       if (data.error) {
         console.error(data.error);
         $("#messages").append(
-          "<div><strong>Error:</strong> " + data.error + "</div>"
+          "<div class='text-messages'><strong>Error:</strong> " +
+            data.error +
+            "</div>"
         );
       } else {
         $("#messages").append(
-          "<div><strong>ChatGPT:</strong> " + data.message + "</div>"
+          "<div class='text-messages'><strong>ChatGPT:</strong> " +
+            data.message +
+            "</div>"
         );
       }
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
       console.error("Request failed: " + textStatus + ", " + errorThrown);
       $("#messages").append(
-        "<div><strong>Error:</strong> " + textStatus + "</div>"
+        "<div class='text-messages'><strong>Error:</strong> " +
+          textStatus +
+          "</div>"
       );
     });
-  console.log("called3");
 }
+
+const inputBox = document.getElementById("user-input");
+inputBox.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    sendMessage();
+  }
+});
