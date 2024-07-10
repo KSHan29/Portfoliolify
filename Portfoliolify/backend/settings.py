@@ -28,9 +28,11 @@ STATICFILES_DIRS = [
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 OPENAI_API_KEY = config('OPENAI_API_KEY')
+DEBUG = config('DEBUG', cast=bool)
+SOCIAL_AUTH_GITHUB_KEY = config('SOCIAL_AUTH_GITHUB_SECRET')
+SOCIAL_AUTH_GITHUB_SECRET = config('SOCIAL_AUTH_GITHUB_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -126,9 +128,6 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
-
-SOCIAL_AUTH_GITHUB_KEY = 'Ov23liAHJgOV8UQWRDe8'
-SOCIAL_AUTH_GITHUB_SECRET = '22dda10986d54de10cc4d1deca8b91d8110b02e0'
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
