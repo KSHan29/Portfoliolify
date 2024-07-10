@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 # import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,10 +26,12 @@ STATICFILES_DIRS = [
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^%(nelr!lta*-bdr!^=1g!j=bm@z$zcfrm!97ghc@3sfv40(l&'
+# SECRET_KEY = 'django-insecure-^%(nelr!lta*-bdr!^=1g!j=bm@z$zcfrm!97ghc@3sfv40(l&'
+SECRET_KEY = config('DJANGO_SECRET_KEY')
+OPENAI_API_KEY = config('OPENAI_API_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -168,12 +171,6 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# For ChatGPT
-## NUS email
-
-# For deployment
-# settings.py
 
 # SECURE_SSL_REDIRECT = True
 # SESSION_COOKIE_SECURE = True
