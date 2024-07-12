@@ -4,7 +4,14 @@ body {
   padding: 0;
 }
 
+.button.chat-link {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
 .container {
+  position: relative;
   max-width: 1000px;
   margin: 50px auto;
   padding: 20px;
@@ -150,7 +157,8 @@ h1 {
 
 .project-buttons .edit-button,
 .project-buttons .sync-button,
-.project-buttons .view-button {
+.project-buttons .view-button,
+.project-buttons .chat-button {
   margin-bottom: 20px;
   width: 150px;
 }

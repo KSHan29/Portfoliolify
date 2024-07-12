@@ -21,6 +21,12 @@
     </div>
   </a>
   <h1>{{ profile.user }}'s GitHub Projects</h1>
+  <button
+    class="button chat-link"
+    onclick="window.location.href='{% url 'public_projects_chat' profile.user %}'"
+  >
+    AI Assistant
+  </button>
   {% if projects %}
   <div id="projects-wrapper">
     <div id="projects-container">

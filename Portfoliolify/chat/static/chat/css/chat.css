@@ -10,8 +10,10 @@ body {
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   max-width: 95%;
-  margin: 50px auto;
+  margin: 50px;
   position: relative;
+  padding: 20px;
+  min-width: fit-content;
 }
 
 .chat-box {
@@ -30,8 +32,7 @@ body {
 }
 
 .chat-box-spacer {
-  width: 350px;
-  max-width: 350px;
+  position: relative;
 }
 
 .chat-header {
@@ -45,7 +46,6 @@ body {
 }
 
 .container {
-  max-width: 70%;
   min-width: 700px;
   margin: 50px auto;
   padding: 20px;
@@ -54,6 +54,11 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.content-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
 }
 
 #form {
@@ -218,6 +223,19 @@ h1 {
 .project-buttons {
   display: flex;
   gap: 20px;
+}
+
+.project-buttons.private {
+  position: absolute;
+  top: 25px;
+}
+
+.project-buttons .edit-button,
+.project-buttons .sync-button,
+.project-buttons .view-button,
+.project-buttons .chat-button {
+  margin-bottom: 20px;
+  width: 150px;
 }
 
 .project h2 {

@@ -1,7 +1,7 @@
 from social_django.models import UserSocialAuth
 from django.contrib import messages
 from django.contrib.staticfiles import finders
-import requests
+from .models import Project, UserProfile
 import json
 
 def check_user_logged_in(request):
@@ -36,11 +36,11 @@ def get_language_colors():
         language_colors = json.load(json_file)
     return language_colors
 
-def get_projects_context(request):
+def get_projects_context(request, user):
     query = request.GET.get('q')
-    projects = request.user.projects.filter(show=True)
-    profile = request.user.userprofile
-    has_synced = profile.has_synced
+    projects = Project.objects.filter(owner=user, show=True)
+    profile = UserProfile.objects.get(user=user)
+    has_synced = profile.has_synced 
     if query:
         projects = projects.filter(name__icontains=query)
     context = {

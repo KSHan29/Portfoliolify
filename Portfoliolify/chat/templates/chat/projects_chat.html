@@ -1,0 +1,38 @@
+{% extends 'chat/base_chat.html' %} {% load static language_colors %}
+
+<!-- prettier-ignore -->
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'chat/css/chat.css' %}" />
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'chat/js/script.js' %}"></script>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block title %}Your Projects{% endblock %}
+
+{% block buttons %}
+<div class="project-buttons private">
+  <button
+    class="button edit-button"
+    onclick="window.location.href='{% url 'select_projects' %}'"
+  >
+    Edit
+  </button>
+  <button
+    class="button sync-button"
+    onclick="window.location.href='{% url 'sync_projects' %}'"
+  >
+    Sync
+  </button>
+  <button
+    class="button view-button"
+    onclick="window.location.href='{% url 'public_projects' profile.user %}'"
+  >
+    View
+  </button>
+</div>
+{% endblock %}
