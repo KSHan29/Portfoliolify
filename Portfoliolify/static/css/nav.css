@@ -19,6 +19,12 @@ nav {
   padding: 10px 0;
 }
 
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
 nav ul {
   list-style-type: none;
   margin: 0;
@@ -107,7 +113,6 @@ nav ul li a:hover {
 
 #user-name {
   color: #fff;
-  margin-right: 20px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -117,6 +117,10 @@ h1 {
   margin-top: 20px;
 }
 
+#profile-header {
+  margin-top: 50px;
+}
+
 .project {
   padding: 10px;
   border-radius: 5px;
@@ -187,7 +191,7 @@ h1 {
 
 #projects-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns of equal width */
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   width: 100%;
   text-align: center;

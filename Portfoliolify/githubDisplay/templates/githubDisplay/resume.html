@@ -1,0 +1,57 @@
+{% extends 'base.html' %} {% load static language_colors %}
+
+<!-- prettier-ignore -->
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'githubDisplay/css/projects.css' %}" />
+<link rel="stylesheet" href="{% static 'githubDisplay/css/resume.css' %}" />
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'githubDisplay/js/resume.js' %}"></script>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block title %}Your Projects{% endblock %}
+
+{% block content %}
+<div id="profile-header">
+  <a href="https://github.com/{{ profile.user }}" target="_blank">
+    <div id="profile-container">
+      <img
+        src="{{ profile.profile_img_url }}"
+        alt="GitHub Profile"
+        id="github-avatar"
+        class="public-profile"
+      />
+    </div>
+  </a>
+  {% block header %}
+  <h1>Your GitHub Projects</h1>
+  {% endblock %}
+  <div class="body">
+    <div class="container">
+      <h1>Upload Your Resume</h1>
+      <form id="resume-form" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="resume">Choose your resume:</label>
+          <input
+            type="file"
+            id="resume"
+            name="resume"
+            accept=".pdf,.doc,.docx"
+            required
+          />
+          <label for="resume" class="custom-file-upload">
+            <i class="fa fa-cloud-upload"></i> Select File
+          </label>
+          <span id="file-selected">No file selected</span>
+        </div>
+        <button type="submit" class="button">Upload</button>
+      </form>
+      <div id="message"></div>
+    </div>
+  </div>
+  {% endblock %}
+</div>

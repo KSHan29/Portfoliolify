@@ -92,30 +92,23 @@
             selection or syncing more projects!
           </div>
           <div class="project-buttons">
-            <button
-              class="button edit-button"
-              onclick="window.location.href='{% url 'select_projects' %}'"
-            >
-              Edit
-            </button>
-            <button
-              class="button sync-button"
-              onclick="window.location.href='{% url 'sync_projects' %}'"
-            >
-              Sync
-            </button>
+            <a href="{% url 'select_projects' %}">
+              <button class="button edit-button">Edit</button>
+            </a>
+            <a href="{% url 'sync_projects' %}">
+              <button class="button sync-button">Sync</button>
+            </a>
           </div>
           {% else %}
           <div class="no-projects">
             No projects found, start making some then click the button below to
             update!
           </div>
-          <button
-            class="button sync-button"
-            onclick="window.location.href='{% url 'sync_projects' %}'"
-          >
-            Sync Projects with GitHub
-          </button>
+          <a href="{% url 'sync_projects' %}">
+            <button class="button sync-button">
+              Sync Projects with GitHub
+            </button>
+          </a>
           {% endif %}
         </div>
         {% endif %}

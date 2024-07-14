@@ -39,7 +39,7 @@ def home_view(request):
     if utils.check_user_logged_in(request) and request.user.userprofile.has_synced:
         return redirect('user_projects')
     else:
-        return render(request, 'gitHubDisplay/home.html')
+        return render(request, 'githubDisplay/home.html')
 
 @login_required
 def sync_projects_view(request):
@@ -98,14 +98,14 @@ def user_projects_view(request):
     profile = request.user.userprofile
     context = utils.get_projects_context(request, profile.user)
     context['profile'] = profile
-    return render(request, 'gitHubDisplay/projects.html', context)
+    return render(request, 'githubDisplay/projects.html', context)
 
-def public_projects_views(request, github_username):
+def public_projects_view(request, github_username):
     user = get_object_or_404(User, username=github_username)
     profile = get_object_or_404(UserProfile, user=user)
     context = utils.get_projects_context(request, user)
     context['profile'] = profile
-    return render(request, 'gitHubDisplay/public_projects.html', context)
+    return render(request, 'githubDisplay/public_projects.html', context)
 
 @login_required
 def projects_selection_view(request):
@@ -120,4 +120,15 @@ def projects_selection_view(request):
         form = ProjectSelectionForm(user=request.user)
     projects = request.user.projects.all()
     
-    return render(request, 'gitHubDisplay/projects_selection.html', {'form': form, 'projects': projects})
+    return render(request, 'githubDisplay/projects_selection.html', {'form': form, 'projects': projects})
+
+# Handles all views involving resume
+@login_required
+def user_resume_view(request):
+    profile = request.user.userprofile
+    context = utils.get_projects_context(request, profile.user)
+    context['profile'] = profile
+    return render(request, 'gitHubDisplay/resume.html', context)
+
+def public_resume_view(request):
+    return render(request, 'githubDisplay/resume.html')

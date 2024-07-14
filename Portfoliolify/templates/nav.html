@@ -1,60 +1,67 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/global.css' %}" />
 <link rel="stylesheet" href="{% static 'css/nav.css' %}" />
-
-<div class="top-ribbon">
-  <div class="left">
-    <a href="https://github.com">
-      <img
-        id="github-logo"
-        src="{% static 'images/github-logo.png' %}"
-        alt="GitHub Logo"
-      />
-      GitHub
-    </a>
-  </div>
-  <div class="center">
-    {% if projects or query %}
-    <form method="GET" action="" id="search-form">
-      <input
-        id="search-bar"
-        type="text"
-        name="q"
-        placeholder="Search projects..."
-        value="{{ request.GET.q }}"
-      />
-    </form>
-    {% endif %}
-  </div>
-  <div class="right">
-    {% if user.is_authenticated %} {% if request.session.github_avatar_url %}
-    <a href="https://github.com/{{ user.username }}" target="_blank">
-      <div id="profile-container">
+<div class="nav-bar">
+  <div class="top-ribbon">
+    <div class="left">
+      <a href="https://github.com">
         <img
-          src="{{ request.session.github_avatar_url }}"
-          alt="GitHub Profile"
-          id="github-avatar"
+          id="github-logo"
+          src="{% static 'images/github-logo.png' %}"
+          alt="GitHub Logo"
         />
-        <div id="user-name">{{ user.username }}</div>
-      </div>
-    </a>
-    {% endif %}
-    <button class="button" onclick="window.location.href='{% url 'logout' %}'">
-      Logout
-    </button>
-    {% else %}
-    <button class="button" onclick="window.location.href='{% url 'login' %}'">
-      Login
-    </button>
-    {% endif %}
+        GitHub
+      </a>
+    </div>
+    <div class="center">
+      {% if projects or query %}
+      <form method="GET" action="" id="search-form">
+        <input
+          id="search-bar"
+          type="text"
+          name="q"
+          placeholder="Search projects..."
+          value="{{ request.GET.q }}"
+        />
+      </form>
+      {% endif %}
+    </div>
+    <div class="right">
+      {% if user.is_authenticated %} {% if request.session.github_avatar_url %}
+      <a href="https://github.com/{{ user.username }}" target="_blank">
+        <div id="profile-container">
+          <img
+            src="{{ request.session.github_avatar_url }}"
+            alt="GitHub Profile"
+            id="github-avatar"
+          />
+          <div id="user-name">{{ user.username }}</div>
+        </div>
+      </a>
+      {% endif %}
+      <a href="{% url 'user_resume' %}">
+        <button class="button chat-button">Profile</button>
+      </a>
+      <button
+        class="button"
+        onclick="window.location.href='{% url 'logout' %}'"
+      >
+        Logout
+      </button>
+      {% else %}
+      <button class="button" onclick="window.location.href='{% url 'login' %}'">
+        Login
+      </button>
+      {% endif %}
+    </div>
   </div>
-</div>
 
-<nav>
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/about/">About</a></li>
-    <li><a href="/contact/">Contact</a></li>
-    <!-- Add more navigation links as needed -->
-  </ul>
-</nav>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about/">About</a></li>
+      <li><a href="/contact/">Contact</a></li>
+      <!-- Add more navigation links as needed -->
+    </ul>
+  </nav>
+</div>

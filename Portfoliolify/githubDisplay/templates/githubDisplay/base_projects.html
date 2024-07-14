@@ -1,0 +1,121 @@
+{% extends 'base.html' %} {% load static language_colors %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'githubDisplay/css/projects.css' %}" />
+{% endblock %}
+
+{% block title %}Your Projects{% endblock %}
+
+{% block content %}
+<div id="profile-header">
+  <a href="https://github.com/{{ profile.user }}" target="_blank">
+    <div id="profile-container">
+      <img
+        src="{{ profile.profile_img_url }}"
+        alt="GitHub Profile"
+        id="github-avatar"
+        class="public-profile"
+      />
+    </div>
+  </a>
+  {% block header %}
+  <h1>Your GitHub Projects</h1>
+  {% endblock %}
+</div>
+<div class="container">
+  {% block buttons %} {% endblock %}
+  {% if projects %}
+  {% block chatButton %}
+  <a href="{% url 'public_projects_chat' profile.user %}"
+    <button class="button chat-link">AI Assistant</button>
+  </a>
+  {% endblock %}
+  <div id="projects-wrapper">
+    <div id="projects-container">
+      {% for project in projects %}
+      <div class="project">
+        <a href="{{ project.html_url }}" target="_blank"
+          ><h2>{{ project.name }}</h2></a
+        >
+        <div id="project-description">{{ project.description }}</div>
+        {% if project.languages|length > 0 %}
+        <div id="project-languages">
+          <div class="language-header">Languages</div>
+          <div class="language-bar">
+            {% for language, percentage in project.languages.items %}
+            <div
+              class="language"
+              style="width: {{ percentage }}%; background-color: {{ language|language_color }};"
+            ></div>
+            {% endfor %}
+          </div>
+          <ul class="language-list">
+            {% for language, percentage in project.languages.items %}
+            <li>
+              <span
+                class="language-color"
+                style="background-color: {{ language|language_color }};"
+              ></span>
+              <span class="language-percentage-tag"> {{ language }}</span>
+              {{ percentage|floatformat:1 }}%
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        <img
+          src="{{ project.img_url }}"
+          alt="Project Image"
+          id="project-image"
+        />
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div id="no-projects-container">
+      <div class="logo-container">
+        <img
+          class="logo"
+          src="{% static 'images/Portfoliolify.png' %}"
+          alt="Portfoliolify"
+        />
+      </div>
+      {% if has_synced %}
+      <div class="no-projects">
+        No projects found. Try checking your search parameters, changing
+        selection or syncing more projects!
+      </div>
+      <div class="project-buttons">
+        <a href="{% url 'select_projects' %}">
+          <button
+            class="button edit-button"
+          >
+            Edit
+          </button>
+        </a>
+        <a href="{% url 'sync_projects' %}">
+          <button
+            class="button sync-button"
+          >
+            Sync
+          </button>
+        </a>
+      </div>
+      {% else %}
+      <div class="no-projects">
+        No projects found, start making some then click the button below to
+        update!
+      </div>
+      <a href="{% url 'sync_projects' %}">
+        <button
+          class="button sync-button"
+        >
+          Sync Projects with GitHub
+        </button>
+      </a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

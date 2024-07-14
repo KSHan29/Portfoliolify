@@ -1,93 +1,19 @@
-{% extends 'base.html' %} {% load static language_colors %}
+{% extends 'githubDisplay/base_projects.html' %}
+<!-- prettier-ignore -->
+{% load static language_colors %}
 
 <!-- prettier-ignore -->
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'githubDisplay/css/projects.css' %}" />
+<link
+  rel="stylesheet"
+  href="{% static 'githubDisplay/css/publicProjects.css' %}"
+/>
 {% endblock %}
 
 <!-- prettier-ignore -->
 {% block title %}{{ profile.user }}'s Projects{% endblock %}
 
-{% block content %}
-<div class="container">
-  <a href="https://github.com/{{ profile.user }}" target="_blank">
-    <div id="profile-container">
-      <img
-        src="{{ profile.profile_img_url }}"
-        alt="GitHub Profile"
-        id="github-avatar"
-        class="public-profile"
-      />
-    </div>
-  </a>
-  <h1>{{ profile.user }}'s GitHub Projects</h1>
-  <button
-    class="button chat-link"
-    onclick="window.location.href='{% url 'public_projects_chat' profile.user %}'"
-  >
-    AI Assistant
-  </button>
-  {% if projects %}
-  <div id="projects-wrapper">
-    <div id="projects-container">
-      {% for project in projects %}
-      <div class="project">
-        <a href="{{ project.html_url }}" target="_blank"
-          ><h2>{{ project.name }}</h2></a
-        >
-        <div id="project-description">{{ project.description }}</div>
-        <!-- prettier-ignore -->
-        {% if project.languages|length > 0 %}
-        <div id="project-languages">
-          <div class="language-header">Languages</div>
-          <div class="language-bar">
-            {% for language, percentage in project.languages.items %}
-            <div
-              class="language"
-              style="width: {{ percentage }}%; background-color: {{ language|language_color }};"
-            ></div>
-            {% endfor %}
-          </div>
-          <ul class="language-list">
-            {% for language, percentage in project.languages.items %}
-            <li>
-              <span
-                class="language-color"
-                style="background-color: {{ language|language_color }};"
-              ></span>
-              <span class="language-percentage-tag"> {{ language }}</span>
-              {{ percentage|floatformat:1 }}%
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
-        <img
-          src="{{ project.img_url }}"
-          alt="Project Image"
-          id="project-image"
-        />
-      </div>
-      {% endfor %}
-    </div>
-    {% else %}
-    <div id="no-projects-container">
-      <div class="logo-container">
-        <img
-          class="logo"
-          src="{% static 'images/Portfoliolify.png' %}"
-          alt="Portfoliolify"
-        />
-      </div>
-      {% if has_synced %}
-      <div class="no-projects">
-        No projects found. Try checking your search parameters!
-      </div>
-      {% else %}
-      <div class="no-projects">The user has not uploaded his projects yet!</div>
-      {% endif %}
-    </div>
-    {% endif %}
-  </div>
-</div>
+{% block header %}
+<h1>{{ profile.user }}'s Projects</h1>
 {% endblock %}

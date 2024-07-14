@@ -16,23 +16,14 @@
 
 {% block buttons %}
 <div class="project-buttons private">
-  <button
-    class="button edit-button"
-    onclick="window.location.href='{% url 'select_projects' %}'"
-  >
-    Edit
-  </button>
-  <button
-    class="button sync-button"
-    onclick="window.location.href='{% url 'sync_projects' %}'"
-  >
-    Sync
-  </button>
-  <button
-    class="button view-button"
-    onclick="window.location.href='{% url 'public_projects' profile.user %}'"
-  >
-    View
-  </button>
+  <a href="{% url 'select_projects' %}">
+    <button class="button edit-button">Edit</button>
+  </a>
+  <a href="{% url 'sync_projects' %}">
+    <button class="button sync-button">Sync</button>
+  </a>
+  <a href="{% url 'public_projects' profile.user %}">
+    <button class="button view-button">View</button>
+  </a>
 </div>
 {% endblock %}
