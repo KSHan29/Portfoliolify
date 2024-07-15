@@ -1,14 +1,15 @@
+import requests
+import os
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-import requests
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.conf import settings
+from chat import summarise_with_chatgpt
 from . import utils
-from .models import Project, UserProfile
+from .models import Project, UserProfile, ResumeSummary
 from .forms import ProjectSelectionForm
-
-
 
 @login_required
 def profile_data_view(request):
@@ -124,11 +125,60 @@ def projects_selection_view(request):
 
 # Handles all views involving resume
 @login_required
-def user_resume_view(request):
-    profile = request.user.userprofile
+def resume_upload_view(request):
+    user = request.user
+    profile = user.userprofile
     context = utils.get_projects_context(request, profile.user)
     context['profile'] = profile
-    return render(request, 'gitHubDisplay/resume.html', context)
+    resume_exists = ResumeSummary.objects.filter(user=user).exists()
+    resume_instance = None
+    if resume_exists:
+        resume_instance = ResumeSummary.objects.get(user=user)
+        context['resume'] = resume_instance
+    if request.method == 'POST' and 'resume' in request.FILES:
+        resume = request.FILES['resume']
+        upload_dir = os.path.join(settings.BASE_DIR, 'uploads')
+
+        if not resume.name.endswith('.pdf'):
+            return HttpResponseBadRequest('Invalid file format. Only PDF files are allowed.')
+
+        # Create the directory if it doesn't exist
+        if not os.path.exists(upload_dir):
+            os.makedirs(upload_dir)
+        
+        file_path = os.path.join(upload_dir, resume.name)
+
+        with open(file_path, 'wb+') as destination:
+            for chunk in resume.chunks():
+                destination.write(chunk)
+        try:
+            resume_summary = summarise_with_chatgpt.summarize_pdf(file_path)
+            if not resume_instance:
+                resume_instance = ResumeSummary(
+                    user=user,
+                    personal=resume_summary['personal'],
+                    summary=resume_summary['summary'],
+                    education=resume_summary['education'],
+                    skills=resume_summary['skills'],
+                    experience=resume_summary['experience'],
+                    projects=resume_summary['projects'],
+                )
+                resume_instance.save()
+            else:
+                resume_instance.personal = resume_summary['personal']
+                resume_instance.summary = resume_summary['summary']
+                resume_instance.education = resume_summary['education']
+                resume_instance.skills = resume_summary['skills']
+                resume_instance.experience = resume_summary['experience']
+                resume_instance.projects = resume_summary['projects']
+                resume_instance.save()
+            context['resume'] = resume_summary
+        except Exception as e:
+            return HttpResponseBadRequest(f'Error reading file: {str(e)}')
+
+        return render(request, 'githubDisplay/resume.html', context)
+    
+    return render(request, 'githubDisplay/resume.html', context)
 
 def public_resume_view(request):
     return render(request, 'githubDisplay/resume.html')

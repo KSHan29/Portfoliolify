@@ -16,4 +16,8 @@
 
 {% block header %}
 <h1>{{ profile.user }}'s Projects</h1>
+{% endblock %} {% block chatButton %}
+<a href="{% url 'public_projects_chat' profile.user %}">
+  <button class="button chat-link">AI Assistant</button>
+</a>
 {% endblock %}

@@ -1,2 +1,5 @@
 Django==3.2.4
 requests==2.25.1
+pdfminer.six
+python-docx
+spacy
