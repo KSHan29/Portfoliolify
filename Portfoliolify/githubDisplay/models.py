@@ -24,12 +24,13 @@ class UserProfile(models.Model):
 
 class ResumeSummary(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    personal = models.JSONField()
-    summary = models.TextField()
-    education = models.JSONField()
-    skills = models.JSONField()
-    experience = models.JSONField()
-    projects = models.JSONField()
+    pdf_file = models.FileField(upload_to='uploads/pdfs/')
+    personal = models.JSONField(blank=True, null=True)
+    summary = models.TextField(blank=True, null=True)
+    education = models.JSONField(blank=True, null=True)
+    skills = models.JSONField(blank=True, null=True)
+    experience = models.JSONField(blank=True, null=True)
+    projects = models.JSONField(blank=True, null=True)
     def __str__(self):
         return self.user.username
 

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project
+from .models import Project, ResumeSummary
 
 class ProjectSelectionForm(forms.Form):
     projects = forms.ModelMultipleChoiceField(

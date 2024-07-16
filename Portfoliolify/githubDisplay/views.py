@@ -130,54 +130,40 @@ def resume_upload_view(request):
     profile = user.userprofile
     context = utils.get_projects_context(request, profile.user)
     context['profile'] = profile
+
     resume_exists = ResumeSummary.objects.filter(user=user).exists()
     resume_instance = None
     if resume_exists:
         resume_instance = ResumeSummary.objects.get(user=user)
         context['resume'] = resume_instance
+
     if request.method == 'POST' and 'resume' in request.FILES:
         resume = request.FILES['resume']
-        upload_dir = os.path.join(settings.BASE_DIR, 'uploads')
-
-        if not resume.name.endswith('.pdf'):
-            return HttpResponseBadRequest('Invalid file format. Only PDF files are allowed.')
-
-        # Create the directory if it doesn't exist
-        if not os.path.exists(upload_dir):
-            os.makedirs(upload_dir)
-        
-        file_path = os.path.join(upload_dir, resume.name)
-
-        with open(file_path, 'wb+') as destination:
-            for chunk in resume.chunks():
-                destination.write(chunk)
         try:
-            resume_summary = summarise_with_chatgpt.summarize_pdf(file_path)
-            if not resume_instance:
-                resume_instance = ResumeSummary(
-                    user=user,
-                    personal=resume_summary['personal'],
-                    summary=resume_summary['summary'],
-                    education=resume_summary['education'],
-                    skills=resume_summary['skills'],
-                    experience=resume_summary['experience'],
-                    projects=resume_summary['projects'],
-                )
-                resume_instance.save()
+            if resume_instance:
+                resume_instance.pdf_file.delete(save=False)
+                resume_instance.pdf_file = resume
             else:
-                resume_instance.personal = resume_summary['personal']
-                resume_instance.summary = resume_summary['summary']
-                resume_instance.education = resume_summary['education']
-                resume_instance.skills = resume_summary['skills']
-                resume_instance.experience = resume_summary['experience']
-                resume_instance.projects = resume_summary['projects']
-                resume_instance.save()
-            context['resume'] = resume_summary
+                resume_instance = ResumeSummary(user=user, pdf_file=resume)
+            resume_instance.save()
+
+            # Extract text from the uploaded PDF
+            pdf_path = resume_instance.pdf_file.path
+            # Summarize and extract information from the text using ChatGPT
+            resume_summary = summarise_with_chatgpt.summarize_pdf(pdf_path)
+            resume_instance.personal = resume_summary.get('personal', {})
+            resume_instance.summary = resume_summary.get('summary', '')
+            resume_instance.education = resume_summary.get('education', {})
+            resume_instance.skills = resume_summary.get('skills', {})
+            resume_instance.experience = resume_summary.get('experience', {})
+            resume_instance.projects = resume_summary.get('projects', {})
+
+            resume_instance.save()
+            context['resume'] = resume_instance
         except Exception as e:
             return HttpResponseBadRequest(f'Error reading file: {str(e)}')
 
         return render(request, 'githubDisplay/resume.html', context)
-    
     return render(request, 'githubDisplay/resume.html', context)
 
 def public_resume_view(request):

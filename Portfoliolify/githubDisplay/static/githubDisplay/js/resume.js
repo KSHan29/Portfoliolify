@@ -62,3 +62,28 @@ document.getElementById("resume").addEventListener("change", function (event) {
 //         `;
 //   }
 // });
+
+// document.addEventListener("DOMContentLoaded", function () {
+//   var modal = document.getElementById("pdfModal");
+//   var iframe = document.getElementById("pdfIframe");
+//   var openModal = document.getElementById("open-pdf-modal");
+//   var span = document.getElementsByClassName("close")[0];
+
+//   const resumeLink = document.getElementById("resume-link");
+//   openModal.onclick = function () {
+//     modal.style.display = "block";
+//     iframe.src = resumeLink; // Set the source of the PDF here
+//   };
+
+//   span.onclick = function () {
+//     modal.style.display = "none";
+//     iframe.src = ""; // Clear the source when closing the modal
+//   };
+
+//   window.onclick = function (event) {
+//     if (event.target == modal) {
+//       modal.style.display = "none";
+//       iframe.src = ""; // Clear the source when closing the modal
+//     }
+//   };
+// });
