@@ -2,7 +2,7 @@
 
 <!-- prettier-ignore -->
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'githubDisplay/css/projects.css' %}" />
+{% comment %} <link rel="stylesheet" href="{% static 'githubDisplay/css/projects.css' %}" /> {% endcomment %}
 <link rel="stylesheet" href="{% static 'githubDisplay/css/resume.css' %}" />
 {% endblock %}
 
@@ -28,13 +28,12 @@
     </div>
   </a>
   {% block header %}
-  <h1>Your Resume</h1>
+    <h1>Your Resume</h1>
 
   {% endblock %}
   <div class="body">
-    {% include 'githubDisplay/component_public_resume.html' %}
-    <!-- prettier-ignore -->
-    {% include 'githubDisplay/component_resume_form.html' %}
+    {% include 'githubDisplay/component_resume.html' %}
+  </div>
+    {% endblock %}
   </div>
 </div>
-{% endblock %}

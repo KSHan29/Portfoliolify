@@ -10,7 +10,32 @@
 
 {% block content %}
 <div class="container">
-  <h1>About Us</h1>
-  <p>Welcome to the about page.</p>
+  <a href="https://www.linkedin.com/in/keeseowhan/" target="_blank">
+    <div id="profile-container">
+      <img
+        src="{% static 'info/images/SeowHan.png' %}"
+        alt="Seow Han"
+        id="profile-photo"
+        class="public-profile"
+      />
+    </div>
+  </a>
+  <div>
+    <div class="about-us-buttons">
+      <a href="{% url 'public_projects' 'KSHan29' %}">
+        <button class="button projects-button">Projects</button>
+      </a>
+      <a href="{% url 'public_resume' 'KSHan29' %}">
+        <button class="button resume-button">Resume</button>
+      </a>
+    </div>
+    <div class="body">
+      Hi! I am Seow Han, an aspiring full stack software engineer. I built this
+      website for a quick and easy way for users to display their GitHub
+      projects. The website is also integrated with an AI assistant which allows
+      both owners and other users to ask questions about the projects! Do check
+      out my resume and projects with the links above!
+    </div>
+  </div>
 </div>
 {% endblock %}

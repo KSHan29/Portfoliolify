@@ -166,5 +166,15 @@ def resume_upload_view(request):
         return render(request, 'githubDisplay/resume.html', context)
     return render(request, 'githubDisplay/resume.html', context)
 
-def public_resume_view(request):
-    return render(request, 'githubDisplay/resume.html')
+def public_resume_view(request, github_username):
+    user = get_object_or_404(User, username=github_username)
+    profile = get_object_or_404(UserProfile, user=user)
+    context = utils.get_projects_context(request, user)
+    context['profile'] = profile
+    resume_exists = ResumeSummary.objects.filter(user=user).exists()
+    resume_instance = None
+    if resume_exists:
+        resume_instance = ResumeSummary.objects.get(user=user)
+        context['resume'] = resume_instance
+
+    return render(request, 'githubDisplay/public_resume.html', context)

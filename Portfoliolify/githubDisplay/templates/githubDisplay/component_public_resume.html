@@ -1,0 +1,5 @@
+{% extends 'githubDisplay/component_resume.html' %} {% block chatButtons %}
+<a href="{% url 'public_resume' profile.user %}">
+  <button class="button view-button">View</button>
+</a>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% load static language_colors %} {% if resume %}
+<div class="container">
+  <div class="resume-buttons">
+    {% block chatButtons %} {% endblock %}
+    <a href="{% url 'public_projects_chat' profile.user %}">
+      <button class="button chat-button">AI Assistant</button>
+    </a>
+  </div>
+  <div id="resume-summary">
+    <h2>Personal</h2>
+    <p><strong>Name</strong>: {{ resume.personal.name }}</p>
+    <p>
+      <strong>Email:</strong>
+      <a href="mailto:{{ resume.personal.email }}"
+        >{{ resume.personal.email }}</a
+      >
+    </p>
+    <p>
+      <strong>LinkedIn:</strong>
+      <a href="{{ resume.personal.linkedin }}" target="_blank"
+        >{{ resume.personal.linkedin }}</a
+      >
+    </p>
+
+    <h2>Summary</h2>
+    <p>{{ resume.summary }}</p>
+
+    <h2>Education</h2>
+    <p>{{ resume.education }}</p>
+
+    <h2>Skills</h2>
+    <p>{{ resume.skills.summary }}</p>
+    <p>{{ resume.skills.list }}</p>
+
+    <h2>Experience</h2>
+    <ul>
+      {% for job in resume.experience %}
+      <li><strong>{{ job.title }}</strong>: {{ job.summary }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Projects</h2>
+    <ul>
+      {% for project in resume.projects %}
+      <li><strong>{{ project.title }}</strong>: {{ project.summary }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endif %}

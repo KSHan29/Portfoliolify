@@ -13,7 +13,7 @@
 {% endblock %}
 
 <!-- prettier-ignore -->
-{% block title %}Your Resume{% endblock %}
+{% block title %}{{profile.user}}'s Resume{% endblock %}
 
 {% block content %}
 <div id="profile-header">
@@ -28,13 +28,11 @@
     </div>
   </a>
   {% block header %}
-  <h1>Your Resume</h1>
-
+  <h1>{{profile.user}}'s Resume</h1>
   {% endblock %}
-  <div class="body">
-    {% include 'githubDisplay/component_public_resume.html' %}
-    <!-- prettier-ignore -->
-    {% include 'githubDisplay/component_resume_form.html' %}
-  </div>
+  <div class="body">{% include 'githubDisplay/component_resume.html' %}</div>
+  {% if not resume %}
+  <div class="no-resume-found">The user has not uploaded their resume yet!</div>
+  {% endif %}
 </div>
 {% endblock %}
