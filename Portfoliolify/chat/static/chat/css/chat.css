@@ -17,7 +17,6 @@ body {
 }
 
 .chat-box {
-  margin-top: 70px;
   position: sticky;
   top: 10%;
   right: 5%;
@@ -47,8 +46,8 @@ body {
 
 .container {
   min-width: 700px;
-  margin: 50px auto;
-  padding: 20px;
+  margin: 0px auto;
+  padding-right: 20px;
   overflow: auto;
   display: flex;
   flex-direction: column;
@@ -59,6 +58,8 @@ body {
 .content-container {
   display: grid;
   grid-template-columns: 3fr 1fr;
+  position: relative;
+  margin-top: 70px;
 }
 
 #form {
@@ -266,6 +267,18 @@ h1 {
   gap: 20px;
   width: 100%;
   text-align: center;
+}
+
+.public-buttons {
+  position: absolute;
+  right: 15px;
+  display: flex;
+  gap: 15px;
+}
+
+.public-buttons .button,
+.project-buttons .button {
+  width: 150px;
 }
 
 .text-messages {

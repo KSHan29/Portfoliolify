@@ -4,10 +4,10 @@ body {
   padding: 0;
 }
 
-.button.chat-link {
-  position: absolute;
-  right: 20px;
-  top: 20px;
+.button.resume-link,
+.button.chat-link,
+.button.project-link {
+  width: 150px;
 }
 
 .container {
@@ -195,6 +195,14 @@ h1 {
   gap: 20px;
   width: 100%;
   text-align: center;
+}
+
+.public-buttons {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  display: flex;
+  gap: 15px;
 }
 
 .save-button {

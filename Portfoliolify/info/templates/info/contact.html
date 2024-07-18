@@ -10,7 +10,47 @@
 
 {% block content %}
 <div class="container">
-  <h1>Contact Us</h1>
-  <p>Welcome to the contact page.</p>
+  <a href="https://www.linkedin.com/in/keeseowhan/" target="_blank">
+    <div id="profile-container" class="contact">
+      <img
+        src="{% static 'info/images/SeowHan.png' %}"
+        alt="Seow Han"
+        id="profile-photo"
+        class="public-profile"
+      />
+      <h2>Kee Seow Han</h2>
+    </div>
+  </a>
+  <div>
+    <div class="contact-us-buttons">
+      <a href="https://www.linkedin.com/in/keeseowhan/" target="_blank">
+        <button class="button linkedin-button">
+          <img
+            src="{% static 'info/images/linkedin.png' %}"
+            alt="linkedin"
+            class="social-links-img"
+          />
+          LinkedIn
+        </button>
+      </a>
+      <a href="https://github.com/KSHan29" , target="_blank">
+        <button class="button github-button">
+          <img
+            src="{% static 'images/github-logo.png' %}"
+            alt="github"
+            class="social-links-img"
+          />
+          GitHub
+        </button>
+      </a>
+      <a href="{% url 'public_resume' 'KSHan29' %}">
+        <button class="button resume-button">Resume</button>
+      </a>
+      <a href="mailto:seow.han@u.nus.edu">
+        <button class="button email-button">Email</button>
+      </a>
+    </div>
+    <div class="body"></div>
+  </div>
 </div>
 {% endblock %}

@@ -25,5 +25,11 @@
   <a href="{% url 'public_projects' profile.user %}">
     <button class="button view-button">View</button>
   </a>
+  <a {% comment %} href="{% url 'resume_chat' %}" {% endcomment %}>
+    <button class="button resume-link">Resume</button>
+  </a>
+  <a href="{% url 'user_projects' %}">
+    <button class="button project-link">Back</button>
+  </a>
 </div>
 {% endblock %}

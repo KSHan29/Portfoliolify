@@ -30,7 +30,9 @@
   {% block header %}
   <h1>{{profile.user}}'s Resume</h1>
   {% endblock %}
-  <div class="body">{% include 'githubDisplay/component_resume.html' %}</div>
+  <div class="body">
+    {% include 'githubDisplay/component_public_resume.html' %}
+  </div>
   {% if not resume %}
   <div class="no-resume-found">The user has not uploaded their resume yet!</div>
   {% endif %}

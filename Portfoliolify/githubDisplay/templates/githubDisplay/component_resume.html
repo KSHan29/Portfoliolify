@@ -1,7 +1,11 @@
 {% load static language_colors %} {% if resume %}
 <div class="container">
   <div class="resume-buttons">
-    {% block chatButtons %} {% endblock %}
+    {% block chatButtons %}
+    <a href="{% url 'user_projects' %}">
+      <button class="button project-link">Projects</button>
+    </a>
+    {% endblock %}
     <a href="{% url 'public_projects_chat' profile.user %}">
       <button class="button chat-button">AI Assistant</button>
     </a>
