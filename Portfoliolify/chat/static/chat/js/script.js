@@ -16,7 +16,7 @@ function getCookie(name) {
 const csrftoken = getCookie("csrftoken");
 console.log(`CSRF Token: ${csrftoken}`); // Log the CSRF token
 
-function sendMessage() {
+function sendMessage(link) {
   var message = $("#user-input").val();
   if (message.trim() === "") {
     return;
@@ -26,7 +26,11 @@ function sendMessage() {
   );
   $("#user-input").val("");
   const username = document.getElementById("username").value;
-  $.post(`/chat/${username}/`, {
+
+  $("#loading-spinner").show();
+  $("#input-button").hide();
+  console.log(`/${link}${username}/`);
+  $.post(`/${link}${username}/`, {
     message: message,
     csrfmiddlewaretoken: csrftoken,
   })
@@ -53,13 +57,21 @@ function sendMessage() {
           textStatus +
           "</div>"
       );
+    })
+    .always(function () {
+      $("#loading-spinner").hide();
+      $("#input-button").show();
     });
 }
-
+const url = document.getElementById("url").value;
+console.log(url);
+const inputButton = document.getElementById("input-button");
 const inputBox = document.getElementById("user-input");
 inputBox.addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
     e.preventDefault();
-    sendMessage();
+    sendMessage(url);
   }
 });
+
+inputButton.addEventListener("click", () => sendMessage(url));

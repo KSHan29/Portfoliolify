@@ -2,4 +2,7 @@
 <a href="{% url 'public_projects' profile.user %}">
   <button class="button project-link">Projects</button>
 </a>
+<a href="{% url 'public_resume_chat' profile.user %}">
+  <button class="button chat-button">AI Assistant</button>
+</a>
 {% endblock %}

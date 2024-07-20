@@ -1,7 +1,8 @@
 from social_django.models import UserSocialAuth
+from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.contrib.staticfiles import finders
-from .models import Project, UserProfile
+from .models import Project, UserProfile, ResumeSummary
 import json
 
 def check_user_logged_in(request):
@@ -47,5 +48,17 @@ def get_projects_context(request, user):
         'projects': projects,
         'query': query,
         'has_synced': has_synced,
+        'profile': profile
         }
+    return context
+
+def get_resume_context(request, user):
+    context = {}
+    profile = get_object_or_404(UserProfile, user=user)
+    context['profile'] = profile
+    resume_exists = ResumeSummary.objects.filter(user=user).exists()
+    resume_instance = None
+    if resume_exists:
+        resume_instance = ResumeSummary.objects.get(user=user)
+        context['resume'] = resume_instance
     return context

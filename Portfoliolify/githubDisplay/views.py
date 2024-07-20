@@ -96,16 +96,13 @@ def sync_projects_view(request):
 
 @login_required
 def user_projects_view(request):
-    profile = request.user.userprofile
-    context = utils.get_projects_context(request, profile.user)
-    context['profile'] = profile
+    user = request.user
+    context = utils.get_projects_context(request, user)
     return render(request, 'githubDisplay/projects.html', context)
 
 def public_projects_view(request, github_username):
     user = get_object_or_404(User, username=github_username)
-    profile = get_object_or_404(UserProfile, user=user)
     context = utils.get_projects_context(request, user)
-    context['profile'] = profile
     return render(request, 'githubDisplay/public_projects.html', context)
 
 @login_required
@@ -127,15 +124,8 @@ def projects_selection_view(request):
 @login_required
 def resume_upload_view(request):
     user = request.user
-    profile = user.userprofile
-    context = utils.get_projects_context(request, profile.user)
-    context['profile'] = profile
 
-    resume_exists = ResumeSummary.objects.filter(user=user).exists()
-    resume_instance = None
-    if resume_exists:
-        resume_instance = ResumeSummary.objects.get(user=user)
-        context['resume'] = resume_instance
+    context = utils.get_resume_context(request, user)
 
     if request.method == 'POST' and 'resume' in request.FILES:
         resume = request.FILES['resume']
@@ -168,13 +158,6 @@ def resume_upload_view(request):
 
 def public_resume_view(request, github_username):
     user = get_object_or_404(User, username=github_username)
-    profile = get_object_or_404(UserProfile, user=user)
-    context = utils.get_projects_context(request, user)
-    context['profile'] = profile
-    resume_exists = ResumeSummary.objects.filter(user=user).exists()
-    resume_instance = None
-    if resume_exists:
-        resume_instance = ResumeSummary.objects.get(user=user)
-        context['resume'] = resume_instance
+    context = utils.get_resume_context(request, user)
 
     return render(request, 'githubDisplay/public_resume.html', context)

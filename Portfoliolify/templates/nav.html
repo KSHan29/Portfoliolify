@@ -58,7 +58,9 @@
 
   <nav>
     <ul>
+      {% if user.is_authenticated %}
       <li><a href="/">Home</a></li>
+      {% endif %}
       <li><a href="/about/">About</a></li>
       <li><a href="/contact/">Contact</a></li>
       <!-- Add more navigation links as needed -->

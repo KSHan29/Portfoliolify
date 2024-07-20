@@ -115,33 +115,7 @@
         {% endif %}
       </div>
     </div>
-    <div class="chat-box-spacer">
-      <div class="chat-box private">
-        <div class="chat-header">Chat</div>
-        <div class="messages" id="messages">
-          <div class="text-messages">
-            <strong>ChatGPT:</strong>
-            {{ context_reply }}
-          </div>
-        </div>
-        <div class="input-box">
-          <textarea
-            type="text"
-            id="user-input"
-            placeholder="Message PortfolioGPT"
-          ></textarea>
-          <input type="hidden" id="username" value="{{ profile.user }}" />
-
-          <button onclick="sendMessage()">
-            <img
-              id="input-button"
-              src="{% static 'chat/images/send_button.png' %}"
-              alt="Send"
-            />
-          </button>
-        </div>
-      </div>
-    </div>
+    {% include 'chat/component_chat_projects.html' %}
   </div>
 </div>
 {% endblock %}

@@ -1,15 +1,6 @@
-import openai
 import json
-from django.conf import settings
 from .extract_resume import extract_text_from_pdf
-
-# Ensure you have your OpenAI API key set
-openai.api_key = settings.OPENAI_API_KEY
-
-client = openai.OpenAI(
-    # This is the default and can be omitted
-    api_key=settings.OPENAI_API_KEY,
-)
+from .chat import model, client
 
 def summarize_text(text):
     try:
@@ -53,7 +44,7 @@ def summarize_text(text):
         Content:
         """ + text
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model=model,
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": f"Please extract the following text into JSon format \n\n{prompt}"}
