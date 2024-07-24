@@ -44,7 +44,7 @@ function sendMessage(link) {
         );
       } else {
         $("#messages").append(
-          "<div class='text-messages'><strong>ChatGPT:</strong> " +
+          "<div class='text-messages'><strong>Porfoliolify:</strong> " +
             data.message +
             "</div>"
         );

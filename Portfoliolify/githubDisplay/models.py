@@ -25,6 +25,7 @@ class UserProfile(models.Model):
 class ResumeSummary(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     pdf_file = models.FileField(upload_to='uploads/pdfs/')
+    images = models.ImageField(upload_to='uploads/images/resumes/', null=True)
     personal = models.JSONField(blank=True, null=True)
     summary = models.TextField(blank=True, null=True)
     education = models.JSONField(blank=True, null=True)

@@ -6,6 +6,7 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.conf import settings
+from pdf2image import convert_from_path
 from chat import summarise_with_chatgpt
 from . import utils
 from .models import Project, UserProfile, ResumeSummary
@@ -126,7 +127,7 @@ def resume_upload_view(request):
     user = request.user
 
     context = utils.get_resume_context(request, user)
-
+    resume_instance = context['resume']
     if request.method == 'POST' and 'resume' in request.FILES:
         resume = request.FILES['resume']
         try:
@@ -139,8 +140,18 @@ def resume_upload_view(request):
 
             # Extract text from the uploaded PDF
             pdf_path = resume_instance.pdf_file.path
+            try:
+                images = convert_from_path(pdf_path)
+            except Exception as e:
+                return HttpResponseBadRequest(f'Error processing PDF file: {str(e)}')
+
+            for i, image in enumerate(images):
+                image_path = os.path.join(settings.MEDIA_ROOT, f'uploads/images/resumes/{resume_instance.id}_{i}.png')
+                image.save(image_path, 'PNG')
+
             # Summarize and extract information from the text using ChatGPT
             resume_summary = summarise_with_chatgpt.summarize_pdf(pdf_path)
+            resume_instance.images = f'uploads/images/resumes/{resume_instance.id}_{i}.png'
             resume_instance.personal = resume_summary.get('personal', {})
             resume_instance.summary = resume_summary.get('summary', '')
             resume_instance.education = resume_summary.get('education', {})
