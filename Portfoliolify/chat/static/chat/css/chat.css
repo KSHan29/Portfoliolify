@@ -31,7 +31,7 @@ body {
 }
 
 .chat-box-spacer {
-  position: relative;
+  right: 10%;
 }
 
 .chat-header {

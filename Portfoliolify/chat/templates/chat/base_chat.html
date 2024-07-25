@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load static language_colors %}
+{% extends 'base.html' %} {% load static %}
 
 <!-- prettier-ignore -->
 {% block extra_css %}
@@ -35,87 +35,9 @@
   <div class="public-buttons">{% block buttonLinks %} {% endblock %}</div>
   <div class="content-container">
     <div class="container">
-      {% if projects %}
-      <div id="projects-wrapper">
-        <div id="projects-container">
-          {% for project in projects %}
-          <div class="project">
-            <a href="{{ project.html_url }}" target="_blank"
-              ><h2>{{ project.name }}</h2></a
-            >
-            <div id="project-description">{{ project.description }}</div>
-            <!-- prettier-ignore -->
-            {% if project.languages|length > 0 %}
-            <div id="project-languages">
-              <div class="language-header">Languages</div>
-              <div class="language-bar">
-                {% for language, percentage in project.languages.items %}
-                <div
-                  class="language"
-                  style="width: {{ percentage }}%; background-color: {{ language|language_color }};"
-                ></div>
-                {% endfor %}
-              </div>
-              <ul class="language-list">
-                {% for language, percentage in project.languages.items %}
-                <li>
-                  <span
-                    class="language-color"
-                    style="background-color: {{ language|language_color }};"
-                  ></span>
-                  <span class="language-percentage-tag"> {{ language }}</span>
-                  {{ percentage|floatformat:1 }}%
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
-            {% endif %}
-            <img
-              src="{{ project.img_url }}"
-              alt="Project Image"
-              id="project-image"
-            />
-          </div>
-          {% endfor %}
-        </div>
-        {% else %}
-        <div id="no-projects-container">
-          <div class="logo-container">
-            <img
-              class="logo"
-              src="{% static 'images/Portfoliolify.png' %}"
-              alt="Portfoliolify"
-            />
-          </div>
-          {% if has_synced %}
-          <div class="no-projects">
-            No projects found. Try checking your search parameters, changing
-            selection or syncing more projects!
-          </div>
-          <div class="project-buttons">
-            <a href="{% url 'select_projects' %}">
-              <button class="button edit-button">Edit</button>
-            </a>
-            <a href="{% url 'sync_projects' %}">
-              <button class="button sync-button">Sync</button>
-            </a>
-          </div>
-          {% else %}
-          <div class="no-projects">
-            No projects found, start making some then click the button below to
-            update!
-          </div>
-          <a href="{% url 'sync_projects' %}">
-            <button class="button sync-button">
-              Sync Projects with GitHub
-            </button>
-          </a>
-          {% endif %}
-        </div>
-        {% endif %}
-      </div>
+      {% include 'githubDisplay/component_projects.html' %}
     </div>
-    {% include 'chat/component_chat_projects.html' %}
   </div>
+  {% include 'chat/component_chat_projects.html' %}
 </div>
 {% endblock %}

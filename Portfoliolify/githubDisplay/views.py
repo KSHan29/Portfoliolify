@@ -75,7 +75,7 @@ def sync_projects_view(request):
         cache_image_key = f'github_repo_image_{owner}_{repo_name}'
         cached_image_url = cache.get(cache_image_key)
         if not cached_image_url:
-            image_response = requests.head(image_url, verify=False)
+            image_response = requests.head(image_url)
             if image_response.status_code != 200:
                 image_url = '/static/images/Portfoliolify.png'
             cache.set(cache_image_key, image_url, 300)  # Cache for 5 minutes
@@ -87,7 +87,8 @@ def sync_projects_view(request):
         })
         languages = {}
         if languages_response.status_code == 200:
-            languages = utils.process_languages(request, languages_response.json())
+            languages_lines = languages_response.json()
+            languages = utils.process_languages(request, languages_lines)
 
         try:
             project = Project.objects.get(owner=request.user, html_url=repo['html_url'])
@@ -103,6 +104,7 @@ def sync_projects_view(request):
                 'description': repo['description'],
                 'img_url': image_url,
                 'languages': languages,
+                'languages_lines': languages_lines,
                 'show': show_value,
             }
         )

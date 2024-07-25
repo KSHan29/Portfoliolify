@@ -12,6 +12,7 @@ class Project(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects')
     show = models.BooleanField(default=True)
     languages = models.JSONField(default=dict)
+    languages_lines = models.JSONField(default=dict)
 
     def __str__(self):
         return self.name
