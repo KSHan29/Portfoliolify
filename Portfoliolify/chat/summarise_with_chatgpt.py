@@ -1,6 +1,7 @@
 import json
 from .extract_resume import extract_text_from_pdf
 from .chat import model, client
+from backend.utils.async_logging import async_log
 
 def summarize_text(text):
     try:
@@ -51,9 +52,10 @@ def summarize_text(text):
             ],
         )
         answer = response.choices[0].message.content.strip()
-
+        async_log('Obtained summarised resume')
         return answer
     except Exception as e:
+        async_log('Failed to summarise resume with ChatGPT', 'error')
         return 'error' + str(e)
 
 def summarize_pdf(pdf_path):

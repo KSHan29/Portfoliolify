@@ -2,3 +2,5 @@ Django==3.2.4
 requests==2.25.1
 pdf2image==1.17.0
 poppler
+django-redis==5.4.0
+celery==5.4.0

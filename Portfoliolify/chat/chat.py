@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
+from backend.utils.async_logging import async_log
 from githubDisplay.utils import get_projects_context, get_resume_context
 from githubDisplay.models import UserProfile, Project
 from . import utils
@@ -34,9 +35,10 @@ def gpt_post(request):
             messages=conversation_history,
         )
         answer = response.choices[0].message.content.strip()
-
+        async_log('Obtained projects response from ChatGPT')
         return JsonResponse({'message': answer})
     except Exception as e:
+        async_log('Failed to obtain response from ChatGPT', 'error')
         return JsonResponse({'error': str(e)}, status=500)
 
 def gpt_init_context(request, github_username):
@@ -74,8 +76,10 @@ def gpt_init_context(request, github_username):
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": context_message}
         ]
+        async_log('Initialised projects context with ChatGPT')
     except Exception as e:
         context['context_reply'] = str(e)
+        async_log('Failed to initialise projects context with ChatGPT', 'error')
     return context
 
 def gpt_resume_post(request):
@@ -88,9 +92,10 @@ def gpt_resume_post(request):
             messages=conversation_history,
         )
         answer = response.choices[0].message.content.strip()
-
+        async_log('Obtained resume response from ChatGPT')
         return JsonResponse({'message': answer})
     except Exception as e:
+        async_log('Failed to obtain resume response from ChatGPT', 'error')
         return JsonResponse({'error': str(e)}, status=500)
 
 def gpt_init_resume_context(request, github_username):
@@ -128,6 +133,8 @@ def gpt_init_resume_context(request, github_username):
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": context_message}
         ]
+        async_log('Initialised resume context with ChatGPT')
     except Exception as e:
         context['context_reply'] = str(e)
+        async_log('Failed to initialise resume context with ChatGPT', 'error')
     return context
