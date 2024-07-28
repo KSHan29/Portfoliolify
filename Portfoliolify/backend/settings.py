@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from decouple import config
-# import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -95,12 +94,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'your_db_name',
-        # 'USER': 'your_db_user',
-        # 'PASSWORD': 'your_db_password',
-        # 'HOST': 'your_db_host',
-        # 'PORT': 'your_db_port',
+        # 'ENGINE': 'django.db.backends.postgresql', 
+        # 'NAME': config('POSTGRES_DB'),
+        # 'USER': config('POSTGRES_USER'),
+        # 'PASSWORD': config('POSTGRES_PASSWORD'),
+        # 'HOST': 'localhost', #config('POSTGRES_DB_HOST'),
+        # 'PORT': config('DATABASE_PORT', default='5432'),
     }
 }
 
@@ -205,7 +204,9 @@ STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+# STATIC_ROOT = os.getenv('DJANGO_STATIC_ROOT', os.path.join(BASE_DIR, 'staticfiles'))
 MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_ROOT = os.getenv('DJANGO_MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
