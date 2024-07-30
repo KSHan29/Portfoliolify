@@ -155,7 +155,8 @@ def resume_upload_view(request):
     user = request.user
 
     context = utils.get_resume_context(request, user)
-    resume_instance = context['resume']
+    
+    resume_instance = context['resume'] if 'resume' in context else None
     if request.method == 'POST' and 'resume' in request.FILES:
         resume = request.FILES['resume']
         try:

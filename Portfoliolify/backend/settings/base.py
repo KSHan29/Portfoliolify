@@ -15,7 +15,7 @@ import os
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
@@ -27,14 +27,10 @@ STATICFILES_DIRS = [
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 OPENAI_API_KEY = config('OPENAI_API_KEY')
-DEBUG = config('DEBUG', cast=bool)
 SOCIAL_AUTH_GITHUB_KEY = config('SOCIAL_AUTH_GITHUB_KEY')
 SOCIAL_AUTH_GITHUB_SECRET = config('SOCIAL_AUTH_GITHUB_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -89,31 +85,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        # 'ENGINE': 'django.db.backends.postgresql', 
-        # 'NAME': config('POSTGRES_DB'),
-        # 'USER': config('POSTGRES_USER'),
-        # 'PASSWORD': config('POSTGRES_PASSWORD'),
-        # 'HOST': 'localhost', #config('POSTGRES_DB_HOST'),
-        # 'PORT': config('DATABASE_PORT', default='5432'),
-    }
-}
-
-# For Redis Caching
-
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    }
-}
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
@@ -208,7 +179,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_ROOT = BASE_DIR / 'media'
 # MEDIA_ROOT = os.getenv('DJANGO_MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
 
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

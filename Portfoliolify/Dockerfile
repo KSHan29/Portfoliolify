@@ -5,15 +5,39 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
+RUN apt-get update && \
+    apt-get install -y poppler-utils && \
+    apt-get clean
+
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN python manage.py collectstatic --noinput
+ARG DJANGO_SECRET_KEY
+ARG DJANGO_STATIC_ROOT
+ARG DJANGO_MEDIA_ROOT
+ARG OPENAI_API_KEY
+ARG DEBUG
+ARG SOCIAL_AUTH_GITHUB_KEY
+ARG SOCIAL_AUTH_GITHUB_SECRET
+ARG POSTGRES_DB_HOST
+ARG POSTGRES_DB
+ARG POSTGRES_USER
+ARG POSTGRES_PASSWORD
+
+ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+ENV DJANGO_STATIC_ROOT=${DJANGO_STATIC_ROOT}
+ENV DJANGO_MEDIA_ROOT=${DJANGO_MEDIA_ROOT}
+ENV OPENAI_API_KEY=${OPENAI_API_KEY}
+ENV DEBUG=${DEBUG}
+ENV SOCIAL_AUTH_GITHUB_KEY=${SOCIAL_AUTH_GITHUB_KEY}
+ENV SOCIAL_AUTH_GITHUB_SECRET=${SOCIAL_AUTH_GITHUB_SECRET}
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 8000
 
-# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "backend.wsgi:application"]
+ENTRYPOINT ["/entrypoint.sh"]
