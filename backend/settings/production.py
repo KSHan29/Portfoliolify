@@ -15,7 +15,7 @@ import os
 from decouple import config
 import dj_database_url
 import django_heroku
-import urlparse
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -98,26 +98,43 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 
 DATABASES = {
-        "default": dj_database_url.config(
-            env="DATABASE_URL",
-            conn_max_age=600,
-            conn_health_checks=True,
-            ssl_require=True,
-        ),
+        # "default": dj_database_url.config(
+        #     env="DATABASE_URL",
+        #     conn_max_age=600,
+        #     conn_health_checks=True,
+        #     ssl_require=True,
+        # ),
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'd903vfgp211k3t',
+            'USER': 'u8tnrhdkiqnjmk',
+            'PASSWORD': 'p85cb5d6152ba7bb79238369545736be70f53542e7467d30048eea840c29e0d0e',
+            'HOST': 'cd1goc44htrmfn.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
+            'PORT':'5432',
+        }
     }
 
-redis_url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
+# redis_url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
+
+redis_host='redis-16276.c57.us-east-1-4.ec2.cloud.redislabs.com'
+redis_port=16276
+redis_password='wjMiJ8e221ximx9fX2sYiO3OK0cK9Moj'
 CACHES = {
         'default': {
             'BACKEND': 'redis_cache.RedisCache',
-            'LOCATION': '%s:%s' % (redis_url.hostname, redis_url.port),
+            'LOCATION': '%s:%s' % (redis_host, redis_port),
             'OPTIONS': {
-                'PASSWORD': redis_url.password,
+                'PASSWORD': redis_password,
                 'DB': 0,
         }
     }
 }
+import redis
 
+r = redis.Redis(
+  host='redis-16276.c57.us-east-1-4.ec2.cloud.redislabs.com',
+  port=16276,
+  password='wjMiJ8e221ximx9fX2sYiO3OK0cK9Moj')
 # settings.py
 
 # For asynchrous logging for debugging
