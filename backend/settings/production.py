@@ -20,6 +20,7 @@ import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+# HEROKU_CHANGE
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
@@ -96,7 +97,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
-
+# HEROKU_CHANGE
 DATABASES = {
         "default": dj_database_url.config(
             env="DATABASE_URL",
@@ -105,12 +106,14 @@ DATABASES = {
             ssl_require=True,
         ),
         # 'default': {
-        #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        #     'NAME': 'd903vfgp211k3t',
-        #     'USER': 'u8tnrhdkiqnjmk',
-        #     'PASSWORD': 'p85cb5d6152ba7bb79238369545736be70f53542e7467d30048eea840c29e0d0e',
-        #     'HOST': 'cd1goc44htrmfn.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
-        #     'PORT':'5432',
+        #     'ENGINE': 'django.db.backends.sqlite3',
+        #     'NAME': BASE_DIR / 'db.sqlite3',
+        # #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # #     'NAME': 'd903vfgp211k3t',
+        # #     'USER': 'u8tnrhdkiqnjmk',
+        # #     'PASSWORD': 'p85cb5d6152ba7bb79238369545736be70f53542e7467d30048eea840c29e0d0e',
+        # #     'HOST': 'cd1goc44htrmfn.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
+        # #     'PORT':'5432',
         # }
     }
 
@@ -119,6 +122,7 @@ DATABASES = {
 redis_host='redis-16276.c57.us-east-1-4.ec2.cloud.redislabs.com'
 redis_port=16276
 redis_password='wjMiJ8e221ximx9fX2sYiO3OK0cK9Moj'
+# HEROKU_CHANGE
 CACHES = {
         'default': {
             'BACKEND': 'redis_cache.RedisCache',
@@ -127,15 +131,15 @@ CACHES = {
                 'PASSWORD': redis_password,
                 'DB': 0,
         }
+        # "default": {
+        #     "BACKEND": "django_redis.cache.RedisCache",
+        #     # 'LOCATION': 'redis://redis:6379/1',
+        #     "LOCATION": "redis://127.0.0.1:6379/1",
+        #     "OPTIONS": {
+        #         "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        #     }
+        }
     }
-}
-import redis
-
-r = redis.Redis(
-  host='redis-16276.c57.us-east-1-4.ec2.cloud.redislabs.com',
-  port=16276,
-  password='wjMiJ8e221ximx9fX2sYiO3OK0cK9Moj')
-# settings.py
 
 # For asynchrous logging for debugging
 LOGGING = {
@@ -198,7 +202,7 @@ LOGIN_REDIRECT_URL = 'fetch_github_profile'
 LOGOUT_REDIRECT_URL = 'home'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
-SOCIAL_AUTH_GITHUB_REDIRECT_URI = 'http://localhost:8000/auth/complete/github/'
+SOCIAL_AUTH_GITHUB_REDIRECT_URI = 'https://portfoliolify-a85a46f5ce61.herokuapp.com/auth/complete/github/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -224,6 +228,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 STORAGES = {
     # Enable WhiteNoise's GZip and Brotli compression of static assets:
     # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
@@ -238,4 +245,5 @@ WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# HEROKU_CHANGE
 django_heroku.settings(locals(), staticfiles=False)
