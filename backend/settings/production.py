@@ -119,9 +119,9 @@ DATABASES = {
 
 # redis_url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
 
-redis_host='redis-16276.c57.us-east-1-4.ec2.cloud.redislabs.com'
-redis_port=16276
-redis_password='wjMiJ8e221ximx9fX2sYiO3OK0cK9Moj'
+redis_host = config('REDIS_HOST')
+redis_port = config('REDIS_PORT')
+redis_password = config('REDIS_PASSWORD')
 # HEROKU_CHANGE
 CACHES = {
         'default': {
