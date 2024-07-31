@@ -1,6 +1,7 @@
 build:
   docker:
     web: Portfoliolify/Dockerfile
+    context: Portfoliolify
 
 release:
   command:
