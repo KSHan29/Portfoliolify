@@ -5,9 +5,12 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-RUN apt-get update && \
-    apt-get install -y poppler-utils && \
-    apt-get clean
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    poppler-utils \
+    curl \
+    && apt-get clean
 
 COPY requirements.txt .
 
