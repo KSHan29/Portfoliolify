@@ -170,21 +170,21 @@ def resume_upload_view(request):
             resume_instance.save()
 
             # Extract text from the uploaded PDF
-            pdf_path = resume_instance.pdf_file.path
-            try:
-                images = convert_from_path(pdf_path)
-                async_log('Saved resume as images')
-            except Exception as e:
-                async_log('Failed to process resume into image', 'error')
-                return HttpResponseBadRequest(f'Error processing PDF file: {str(e)}')
+            # pdf_path = resume_instance.pdf_file.path
+            # try:
+            #     images = convert_from_path(pdf_path)
+            #     async_log('Saved resume as images')
+            # except Exception as e:
+            #     async_log('Failed to process resume into image', 'error')
+            #     return HttpResponseBadRequest(f'Error processing PDF file: {str(e)}')
 
-            for i, image in enumerate(images):
-                image_path = os.path.join(settings.MEDIA_ROOT, f'uploads/images/resumes/{resume_instance.id}_{i}.png')
-                image.save(image_path, 'PNG')
+            # for i, image in enumerate(images):
+            #     image_path = os.path.join(settings.MEDIA_ROOT, f'uploads/images/resumes/{resume_instance.id}_{i}.png')
+            #     image.save(image_path, 'PNG')
 
             # Summarize and extract information from the text using ChatGPT
             resume_summary = summarise_with_chatgpt.summarize_pdf(pdf_path)
-            resume_instance.images = f'uploads/images/resumes/{resume_instance.id}_{i}.png'
+            # resume_instance.images = f'uploads/images/resumes/{resume_instance.id}_{i}.png'
             resume_instance.personal = resume_summary.get('personal', {})
             resume_instance.summary = resume_summary.get('summary', '')
             resume_instance.education = resume_summary.get('education', {})
