@@ -1,12 +1,3 @@
 build:
   docker:
-    web:
-      dockerfile: Portfoliolify/Dockerfile
-      context: Portfoliolify
-
-release:
-  command:
-    - python manage.py migrate
-
-run:
-  web: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    web: Portfoliolify/Dockerfile
