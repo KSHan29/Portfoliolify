@@ -170,7 +170,7 @@ def resume_upload_view(request):
             resume_instance.save()
 
             # Extract text from the uploaded PDF
-            # pdf_path = resume_instance.pdf_file.path
+            pdf_path = resume_instance.pdf_file.path
             # try:
             #     images = convert_from_path(pdf_path)
             #     async_log('Saved resume as images')
