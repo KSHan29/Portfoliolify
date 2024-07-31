@@ -5,6 +5,14 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y python3-psycopg2 netcat-openbsd
+RUN apt-get update && apt-get install -y \
+    python3-psycopg2 \
+    netcat-openbsd \
+    gcc \
+    python3-dev \
+    musl-dev \
+    libpq-dev
 RUN apt-get update && \
     apt-get install -y poppler-utils && \
     apt-get clean
