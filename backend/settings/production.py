@@ -98,20 +98,20 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 
 DATABASES = {
-        # "default": dj_database_url.config(
-        #     env="DATABASE_URL",
-        #     conn_max_age=600,
-        #     conn_health_checks=True,
-        #     ssl_require=True,
-        # ),
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'd903vfgp211k3t',
-            'USER': 'u8tnrhdkiqnjmk',
-            'PASSWORD': 'p85cb5d6152ba7bb79238369545736be70f53542e7467d30048eea840c29e0d0e',
-            'HOST': 'cd1goc44htrmfn.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
-            'PORT':'5432',
-        }
+        "default": dj_database_url.config(
+            env="DATABASE_URL",
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        ),
+        # 'default': {
+        #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        #     'NAME': 'd903vfgp211k3t',
+        #     'USER': 'u8tnrhdkiqnjmk',
+        #     'PASSWORD': 'p85cb5d6152ba7bb79238369545736be70f53542e7467d30048eea840c29e0d0e',
+        #     'HOST': 'cd1goc44htrmfn.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
+        #     'PORT':'5432',
+        # }
     }
 
 # redis_url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
@@ -217,9 +217,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "static/"
-
+STATIC_ROOT = BASE_DIR / "staticfiles"
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 STORAGES = {
     # Enable WhiteNoise's GZip and Brotli compression of static assets:
     # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
