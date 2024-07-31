@@ -1,0 +1,10 @@
+build:
+  docker:
+    web: Dockerfile
+
+release:
+  command:
+    - python manage.py migrate
+
+run:
+  web: gunicorn backend.wsgi:application --bind 0.0.0.0:8000

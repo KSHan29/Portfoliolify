@@ -14,4 +14,4 @@ if [ "$DJANGO_SUPERUSER_USERNAME" ] && [ "$DJANGO_SUPERUSER_EMAIL" ] && [ "$DJAN
 fi
 
 # Start the server using Gunicorn
-exec python manage.py runserver 0.0.0.0:8000
+exec gunicorn backend.wsgi:application --bind 0.0.0.0:8000
