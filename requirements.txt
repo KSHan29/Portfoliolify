@@ -21,3 +21,4 @@ confection<1.0.0,>=0.0.1
 click>=7.0
 cloudpathlib<1.0.0,>=0.7.0
 confection<0.2.0,>=0.0.4
+import dj_database_url

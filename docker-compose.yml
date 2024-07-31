@@ -1,39 +1,39 @@
-version: "3.9"
+# version: "3.9"
 
-services:
-  django:
-    image: django-docker:0.0.1
-    container_name: portfoliolify
-    build: .
-    ports:
-      - "8000:8000"
-    env_file:
-      - .env
-    volumes:
-      - .:/app
-      - static_volume:/app/staticfiles
-      - media_volume:/app/media
-    depends_on:
-      - db
-      - redis
+# services:
+#   django:
+#     image: django-docker:0.0.1
+#     container_name: portfoliolify
+#     build: .
+#     ports:
+#       - "8000:8000"
+#     env_file:
+#       - .env
+#     volumes:
+#       - .:/app
+#       - static_volume:/app/staticfiles
+#       - media_volume:/app/media
+#     depends_on:
+#       - db
+#       - redis
 
-  db:
-    image: postgres:13
-    container_name: postgres_container
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      POSTGRES_DB: my_django_project_db
-      POSTGRES_USER: my_django_user
-      POSTGRES_PASSWORD: my_secure_password
+#   db:
+#     image: postgres:13
+#     container_name: postgres_container
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data/
+#     environment:
+#       POSTGRES_DB: my_django_project_db
+#       POSTGRES_USER: my_django_user
+#       POSTGRES_PASSWORD: my_secure_password
 
-  redis:
-    image: redis:6
-    container_name: redis_container
-    ports:
-      - "6379:6379"
+#   redis:
+#     image: redis:6
+#     container_name: redis_container
+#     ports:
+#       - "6379:6379"
 
-volumes:
-  postgres_data:
-  static_volume:
-  media_volume:
+# volumes:
+#   postgres_data:
+#   static_volume:
+#   media_volume:
