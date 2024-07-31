@@ -15,7 +15,7 @@ import os
 from decouple import config
 import dj_database_url
 import django_heroku
-import redis
+import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -106,12 +106,14 @@ DATABASES = {
         ),
     }
 
+redis_url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
 CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://:wjMiJ8e221ximx9fX2sYiO3OK0cK9Moj@redis-16276.c57.us-east-1-4.ec2.cloud.redislabs.com:16276/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        'default': {
+            'BACKEND': 'redis_cache.RedisCache',
+            'LOCATION': '%s:%s' % (redis_url.hostname, redis_url.port),
+            'OPTIONS': {
+                'PASSWORD': redis_url.password,
+                'DB': 0,
         }
     }
 }
