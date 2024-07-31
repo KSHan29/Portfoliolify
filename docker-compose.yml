@@ -4,16 +4,7 @@ services:
   django:
     image: django-docker:0.0.1
     container_name: portfoliolify
-    build:
-      context: .
-      args:
-        DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
-        DJANGO_STATIC_ROOT: ${DJANGO_STATIC_ROOT}
-        DJANGO_MEDIA_ROOT: ${DJANGO_MEDIA_ROOT}
-        OPENAI_API_KEY: ${OPENAI_API_KEY}
-        DEBUG: ${DEBUG}
-        SOCIAL_AUTH_GITHUB_KEY: ${SOCIAL_AUTH_GITHUB_KEY}
-        SOCIAL_AUTH_GITHUB_SECRET: ${SOCIAL_AUTH_GITHUB_SECRET}
+    build: .
     ports:
       - "8000:8000"
     env_file:
