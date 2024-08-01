@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 import requests
 from backend.utils.async_logging import async_log
@@ -22,3 +23,11 @@ def fetch_github_profile_view(request):
         async_log('User failed to sign in', 'error')
     async_log('Execution should not reach here', 'error')
     return redirect('home')
+
+def login_view(request):
+    return render(request, 'authapp/login.html')
+
+
+def logout_view(request):
+    auth_logout(request)
+    return redirect('/')
