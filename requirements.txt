@@ -26,3 +26,4 @@ cloudpathlib<1.0.0,>=0.7.0
 confection<0.2.0,>=0.0.4
 django-heroku==0.3.1
 dj-rest-auth
+django-allauth
