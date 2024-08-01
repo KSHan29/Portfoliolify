@@ -199,14 +199,15 @@ AUTHENTICATION_BACKENDS = (
 ACCOUNT_EMAIL_VERIFICATION = "none"
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'fetch_github_profile'
+LOGIN_REDIRECT_URL = 'auth/fetch_github_profile'
 LOGOUT_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'auth/fetch_github_profile'
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+SOCIAL_AUTH_GITHUB_REDIRECT_URI = 'http://www.keeseowhan.com/auth/complete/github/'
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = True
 
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
-# SOCIAL_AUTH_GITHUB_REDIRECT_URI = 'https://www.keeseowhan.com/auth/complete/github/'
+# SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 
 # Internationalization
