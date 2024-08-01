@@ -202,6 +202,10 @@ LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_GITHUB_REDIRECT_URI = 'https://www.keeseowhan.com/auth/complete/github/'
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
