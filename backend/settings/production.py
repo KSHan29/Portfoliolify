@@ -197,12 +197,12 @@ AUTHENTICATION_BACKENDS = (
 )
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'auth/fetch_github_profile'
+LOGIN_URL = '/login'
+LOGOUT_URL = '/logout'
+LOGIN_REDIRECT_URL = '/auth/fetch_github_profile'
 LOGOUT_REDIRECT_URL = '/'
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'auth/fetch_github_profile'
-SOCIAL_AUTH_GITHUB_REDIRECT_URI = 'http://www.keeseowhan.com/auth/complete/github/'
+# SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/auth/fetch_github_profile'
+# SOCIAL_AUTH_GITHUB_REDIRECT_URI = 'http://www.keeseowhan.com/auth/complete/github/'
 
 # SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
