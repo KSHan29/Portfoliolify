@@ -50,15 +50,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "django.contrib.sites",
-    "rest_framework",
-    "rest_framework.authtoken",
-    "dj_rest_auth",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.github",
-    "oauth2_provider",
     'django_distill',
     'social_django',
     'githubDisplay',
@@ -77,7 +68,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -204,10 +194,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend',
-    "allauth.account.auth_backends.AuthenticationBackend",
 )
-
-SITE_ID = 1
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
 LOGIN_URL = 'login'
@@ -218,16 +205,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 # SOCIAL_AUTH_URL_NAMESPACE = 'social'
 # SOCIAL_AUTH_GITHUB_REDIRECT_URI = 'https://www.keeseowhan.com/auth/complete/github/'
-SOCIALACCOUNT_PROVIDERS = {
-    "github": {
-        "APP": {
-            "client_id": SOCIAL_AUTH_GITHUB_KEY,
-            "secret": SOCIAL_AUTH_GITHUB_SECRET,
-            "key": "",
-            "redirect_uri": "https://www.keeseowhan.com/accounts/github/login/callback/",
-        }
-    }
-}
 
 
 # Internationalization
