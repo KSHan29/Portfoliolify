@@ -201,7 +201,7 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 # SOCIAL_AUTH_GITHUB_REDIRECT_URI = 'https://www.keeseowhan.com/auth/complete/github/'
