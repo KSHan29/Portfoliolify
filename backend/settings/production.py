@@ -207,6 +207,8 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
+SITE_ID = 1
+
 ACCOUNT_EMAIL_VERIFICATION = "none"
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'

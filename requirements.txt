@@ -27,3 +27,6 @@ confection<0.2.0,>=0.0.4
 django-heroku==0.3.1
 dj-rest-auth
 django-allauth
+djangorestframework
+djangorestframework-authtoken
+django-oauth-toolkit
