@@ -196,13 +196,16 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'fetch_github_profile'
-LOGOUT_REDIRECT_URL = 'home'
+ACCOUNT_EMAIL_VERIFICATION = "none"
+LOGIN_URL = '/login'
+LOGOUT_URL = '/logout'
+LOGIN_REDIRECT_URL = '/auth/fetch-github-profile'
+LOGOUT_REDIRECT_URL = '/'
 
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
-SOCIAL_AUTH_GITHUB_REDIRECT_URI = 'https://portfoliolify-a85a46f5ce61.herokuapp.com/auth/complete/github/'
+SECURE_SSL_REDIRECT = True
+
+# SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
